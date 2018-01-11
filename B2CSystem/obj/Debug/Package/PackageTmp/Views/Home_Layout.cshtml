@@ -1,0 +1,430 @@
+﻿<!DOCTYPE html>
+@using B2CSystem.Models
+@using B2CSystem
+<html>
+
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+
+    <link href="~/css/index.css" rel="stylesheet" />
+    <script src="~/js/jquery-1.9.1.min.js"></script>
+    <script src="~/js/public.js"></script>
+
+
+    <!-- Begin SubCart -->
+    <link href="~/css/SubCart/public.css" rel="stylesheet" />
+    <link href="~/css/SubCart/base.css" rel="stylesheet" />
+
+    <script src="~/js/SubCart/jquery_cart.js"></script>
+
+    <link href="~/css/SubCart/checkOut.css" rel="stylesheet" />
+    <link href="~/css/SubCart/buyConfirm.css" rel="stylesheet" />
+
+    <script src="~/js/layer/layer.js"></script>
+    <!-- End SubCart -->
+
+    <!--[if lte IE 9]>
+</script><script src="js/ie9.js"></script>
+<![endif]-->
+    @*    <script src="~/js/base.js"></script>*@
+    @*    <script>document.createElement("top")</script>
+    <script>document.createElement("search")</script>
+    <script>document.createElement("light")</script>
+    <script>document.createElement("light1")</script>*@
+
+    <script>
+        $(function () {
+            $(".state").click(function () {
+                //判断是否登陆 如果未登录 要提示登录
+                //得到购物车后面的值
+                var user = "@Session["user"]";
+
+
+                if (user == null || user == "") {
+                    layer.open({
+                        title: "温馨提示",
+                        content: "您还没有登陆，请先登录...",
+                        btn: ["确定"],
+                        btn1: function () {
+                            location.href = "/LoginAndRegister/Login?func=car";
+                        }
+                    })
+                } else {
+                    location.href = "/Cart/Cart";
+                }
+            })
+
+
+            //个人中心
+            $("#huiyuan").click(function () {
+                //判断是否登陆 如果未登录 要提示登录
+                //得到购物车后面的值
+                var user = "@Session["user"]";
+
+
+                if (user == null || user == "") {
+                    layer.open({
+                        title: "温馨提示",
+                        content: "您还没有登陆，请先登录...",
+                        btn: ["确定"],
+                        btn1: function () {
+                            location.href = "/LoginAndRegister/Login?func=huiyuan";
+                        }
+                    })
+                } else {
+                    location.href = "/GeRenZhongXing/GeRenZhongXing";
+                }
+            })
+
+
+
+
+            //联系客服
+            $(".kf").click(function () {
+                //判断是否登陆 如果未登录 要提示登录
+                //得到购物车后面的值
+                var user = "@Session["user"]";
+
+
+                if (user == null || user == "") {
+                    layer.open({
+                        title: "温馨提示",
+                        content: "您还没有登陆，请先登录...",
+                        btn: ["确定"],
+                        btn1: function () {
+                            location.href = "/LoginAndRegister/Login?func=kf";
+                        }
+                    })
+                } else {
+                    location.href = "/Chat/Chat";
+                }
+            })
+
+            //<a href="/LoginAndRegister/Login" id="huiyuan">会员登录</a>
+        })
+    </script>
+</head>
+<body>
+
+    @RenderSection("topSection", false)
+    <!--头部-->
+    <top>
+	<section class="seck">
+        <div class="register_login">
+        	<em>您好，</em>
+            @{
+                UserInfo u = Session["user"] as UserInfo;
+                if (u == null)
+                {
+                    <a href="/LoginAndRegister/Login">会员登录</a>
+                     <a href="/LoginAndRegister/Zhuce">快速注册</a>
+                }
+                else
+                {
+                    <a href="/gerenzhongxing/gerenzhongxing">@u.UserName</a>
+                }
+                }
+             <a href="/Home/Index">首页</a>
+        </div>
+       
+        <div class="vip_center">
+        	<a id="huiyuan">会员中心</a>
+            <a href="#">商户中心</a>
+            <a href="#">帮助</a>
+        </div>
+    </section>
+</top>
+    <!--header-->
+    <div class="maxbj1">
+        <header>
+            <b class="logo">
+                <img src="images/logo.png"></b>
+            <search>
+    	<form>
+        	<input type="text" placeholder="查询关键词..." required style=" width:440px; height:30px; text-indent:2em; float:left; box-shadow:none">
+            <button>搜索</button>
+        </form>
+    </search>
+            <div class="sping_car" style="width: 300px;">
+                <b></b>
+                <em class="state">我的购物车<span style="color: red; font-size: 8px;" class="state num">
+                    @if (u != null)
+                    {
+                        //根据userId查询购物车里的数据的条数
+                        //得到用户编号
+                        int userid = u.UserInfo_Id;
+                        B2CSystemEntities1 b2c = new B2CSystemEntities1();
+
+                        int count = b2c.ShopCartInfo.Where(a => a.UserInfo_Id == userid).Count();
+                        @count
+                    }
+                    else
+                    {
+                        @:(未登录)
+                    }</span>
+                </em>
+            </div>
+        </header>
+
+    </div>
+
+    <!--最大的背景-->
+    @*<section class="dao_hang">
+    <nav>
+        @*    	<!--右下侧广告-->
+        <div class="advertisement">
+        	<h4>最新公告</h4>
+            <div class="notice_new">
+            	<p><a href="#">【优选】金秋聚会，买一送一</a></p>
+                <p><a href="#">【优选】中秋嘉年华，好礼钜惠</a></p>
+                <p><a href="#">【优选】冰点破纪录，低价不猫腻</a></p>
+                <p><a href="#">【优选】开学季，“纸”想“净、净”学习</a></p>
+                <p><a href="#">【优选】金秋聚会，买一送一</a></p>
+                <p><a href="#">【优选】中秋嘉年华，好礼钜惠</a></p>
+                <p><a href="#">【优选】开学季，“纸”想“净、净”学习</a></p>
+            </div>
+            <a href="#">
+            	<div class="notice_img">
+            	    <img src="images/activity.jpg" class="img1">
+                    <img src="images/activity.jpg" class="img2">
+                </div>
+            </a>
+            <!--<script>
+			$(function(){
+				$(".notice_img")
+				})
+            </script>-->
+        </div>*@
+
+
+    <!--全部商品分类-->
+    @*<div class="important">
+            <img src="images/all_list.png" style="margin-top: 8px">&nbsp;全部商品分类
+        	<aside style="height: 80px; background-color: #fff">
+                <ul style="background-color: #fff">
+                    @{
+                        B2CSystemEntities1 b = new B2CSystemEntities1();
+                        //得到所有商品类型与商品类型
+                        //List<GoodType> typeList = ViewBag.typeList as List<GoodType>;
+                        List<GoodType> typeList = b.GoodType.Take(5).ToList();
+                        //List<GoodsInfo> goodsList = ViewBag.goodsList as List<GoodsInfo>;
+                        List<DataList> goodsList = b.DataList.ToList();
+                        //得到前三个商铺 storeList
+                        //List<StoreInfo> storeList = ViewBag.storeList as List<StoreInfo>;
+                        List<StoreInfo> storeList = b.StoreInfo.Take(4).ToList();
+                        int iss = 0;
+                        //遍历所有商品类型
+                        foreach (var type in typeList)
+                        {
+                            iss++;
+                        <li class="cates" mt-ct="list0 @iss">
+                            <h3>@type.GTName</h3>
+                            <p>
+                                @for (int i = 0; i < storeList.Count; i++)
+                                {
+                                    <a href="#">@storeList[i].SName</a>
+                                }
+
+                                <i style="font-family: '宋体'; color: #666; line-height: 23px; font-size: 14px; float: left">></i>
+                            </p>
+
+                        </li>
+                         
+                        }
+                    }
+                    
+
+
+
+                </ul>
+            </aside>
+
+
+            <div>
+                <div class="import_list b-list01">
+                    <dt>与内容无关：</dt>
+                    <dd>
+                        <a href="#">T恤</a>
+                        <a href="#">休闲裤</a>
+                        <a href="#">条纹T</a>
+                        <a href="#">牛仔裤</a>
+                        <a href="#">针织运动裤</a>
+                        <a href="#">潮T</a>
+                        <a href="#">格子衬衫</a>
+                        <a href="#">村棉印花T恤</a>
+                        <a href="#">纯色衬衫</a>
+                        <a href="#">牛仔夹克</a>
+                        <a href="#">迷彩风</a>
+                    </dd>
+                    <dt>与内容无关：</dt>
+                    <dd>
+                        <a href="#">T恤</a>
+                        <a href="#">休闲裤</a>
+                        <a href="#">条纹T</a>
+                        <a href="#">牛仔裤</a>
+
+                    </dd>
+                </div>
+                <div class="import_list b-list02">
+                    <dt>与内容无关：</dt>
+                    <dd>
+                        <a href="#">T恤</a>
+                        <a href="#">休闲裤</a>
+
+                    </dd>
+                </div>
+                <div class="import_list b-list03">
+                    <dt>与内容无关：</dt>
+                    <dd>
+                        <a href="#">T恤</a>
+                        <a href="#">休闲裤</a>
+                        <a href="#">条纹T</a>
+                        <a href="#">牛仔裤</a>
+
+                    </dd>
+                </div>
+
+            </div>
+        </div>
+        <!--结束-->
+        <div class="dao_list">
+            <a href="#">首页</a>
+            <a href="#">超级福包</a>
+            <a href="#">母婴之家</a>
+            <a href="#">厨房用品</a>
+            <a href="#">生活必备</a>
+            <a href="#">试吃申请</a>
+            <a href="#">最新公告</a>
+        </div>
+
+    </nav>
+</section>*@
+
+
+    <div>
+        @RenderBody()
+    </div>
+    <div>
+
+        <!--页脚-->
+        <footer>
+            <section class="foot_in">
+                <!--left-->
+                <div class="foot_in_left">
+                    <div>
+                        <h5>购物指南</h5>
+                        <ul>
+                            <li><a href="#">购物流程</a></li>
+                            <li><a href="#">会员介绍</a></li>
+                            <li><a href="#">常见问题</a></li>
+                            <li><a href="#">联系客服</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5>支付方法</h5>
+                        <ul>
+                            <li><a href="#">货到付款</a></li>
+                            <li><a href="#">在线支付</a></li>
+                            <li><a href="#">分期付款</a></li>
+                            <li><a href="#">邮局汇款</a></li>
+                            <li><a href="#">公司转账</a></li>
+
+                        </ul>
+                    </div>
+                    <div>
+                        <h5>配送方式</h5>
+                        <ul>
+                            <li><a href="#">上门自提</a></li>
+                            <li><a href="#">211限时达</a></li>
+                            <li><a href="#">配送服务查询</a></li>
+                            <li><a href="#">配送费收取标准</a></li>
+                            <li><a href="#">海外配送</a></li>
+
+                        </ul>
+                    </div>
+                    <div>
+                        <h5>售后服务</h5>
+                        <ul>
+                            <li><a href="#">售后政策</a></li>
+                            <li><a href="#">价格保护</a></li>
+                            <li><a href="#">退款说明</a></li>
+                            <li><a href="#">返修/退换货</a></li>
+                            <li><a href="#">取消订单</a></li>
+
+                        </ul>
+                    </div>
+                    <div>
+                        <h5>特色服务</h5>
+                        <ul>
+                            <li><a href="#">延保服务</a></li>
+                            <li><a href="#">物流服务</a></li>
+                            <li><a href="#">运营服务</a></li>
+                            <li><a href="#">会员中心</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5>下载APP</h5>
+                        <img src="images/ewm.jpg" width="153" height="153" style="display: block">
+                    </div>
+                </div>
+                <!--right-->
+                <div class="foot_in_right">
+                    <div>
+                        <h5>联系我们</h5>
+                        <p>
+                            <img src="IMG/IndexIMG/dian.png" width="40" height="40" style="float: left"><em style="float: left; line-height: 40px; color: #eb4e01; font-size: 20px">&nbsp;&nbsp;&nbsp;6001-666-888</em>
+                        </p>
+                        <p>
+                            <img src="IMG/IndexIMG/wx.png" width="40" height="40" style="float: left"><em style="float: left; line-height: 40px; color: #eb4e01; font-size: 20px">&nbsp;&nbsp;&nbsp;<a href="#" style="color: #eb4e01">在线客服</a></em>
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </footer>
+        <div class="foots">
+            <div class="foots_in">
+                <a href="#" style="float: left">
+                    <img src="images/logo1.png" width="124" height="56" style="display: block; margin-top: 2px">
+                </a>
+                <em>CopyRight ? 2000-2016 BitAuto,All Rights Reserved.</em>
+            </div>
+        </div>
+
+        <!--侧边栏-->
+        <div class="toolbar">
+            <a class="toolbar-item toolbar-item-weixin state" style="position: relative">
+                <em class="state" style="position: absolute; display: block; line-height: 20px; font-size: 12px; color: #f00; top: -20px; left: 0">
+                    <span style="color: red; font-size: 8px;" class="state num">
+                        @if (u != null)
+                        {
+                            //根据userId查询购物车里的数据的条数
+                            //得到用户编号
+                            int userid = u.UserInfo_Id;
+                            B2CSystemEntities1 b2c = new B2CSystemEntities1();
+
+                            int count = b2c.ShopCartInfo.Where(a => a.UserInfo_Id == userid).Count();
+                            @count
+                        }
+                        else
+                        {
+                            @:(未登录)
+                    }</span>
+
+                </em>
+                <!--<span class="toolbar-layer"></span>-->
+            </a>
+            <a class="toolbar-item toolbar-item-feedback kf"></a>
+            <a href="###" class="toolbar-item toolbar-item-app">
+                <span class="toolbar-layer"></span>
+            </a>
+            <a href="javascript:scroll(0,0)" id="top" class="toolbar-item toolbar-item-top"></a>
+        </div>
+
+    </div>
+    <script src="~/js/SubCart/unslider.min.js"></script>
+    <script src="~/js/SubCart/index.js"></script>
+</body>
+</html>

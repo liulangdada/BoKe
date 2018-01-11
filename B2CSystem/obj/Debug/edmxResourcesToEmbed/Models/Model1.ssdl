@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="B2CSystemModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="B2CSystemModelStoreContainer">
+    <EntitySet Name="AdminInfo" EntityType="B2CSystemModel.Store.AdminInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Center_Money" EntityType="B2CSystemModel.Store.Center_Money" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CollectInfo" EntityType="B2CSystemModel.Store.CollectInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DataList" EntityType="B2CSystemModel.Store.DataList" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GoodsDetailsIMG" EntityType="B2CSystemModel.Store.GoodsDetailsIMG" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GoodsImgs" EntityType="B2CSystemModel.Store.GoodsImgs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GoodsInfo" EntityType="B2CSystemModel.Store.GoodsInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GoodType" EntityType="B2CSystemModel.Store.GoodType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="KeFu" EntityType="B2CSystemModel.Store.KeFu" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderInfo" EntityType="B2CSystemModel.Store.OrderInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="pingjia" EntityType="B2CSystemModel.Store.pingjia" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Shangjia_X_GoodsInfo" EntityType="B2CSystemModel.Store.Shangjia_X_GoodsInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShopCartInfo" EntityType="B2CSystemModel.Store.ShopCartInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShouAddress" EntityType="B2CSystemModel.Store.ShouAddress" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StoreInfo" EntityType="B2CSystemModel.Store.StoreInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserDetails" EntityType="B2CSystemModel.Store.UserDetails" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserInfo" EntityType="B2CSystemModel.Store.UserInfo" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="AdminInfo">
+    <Key>
+      <PropertyRef Name="AdminInfo_Id" />
+    </Key>
+    <Property Name="AdminInfo_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AIAccount" Type="varchar" MaxLength="20" />
+    <Property Name="AIPwd" Type="varchar" MaxLength="20" />
+    <Property Name="AIName" Type="varchar" MaxLength="10" />
+    <Property Name="AIImg" Type="varchar" MaxLength="64" />
+    <Property Name="IsSa" Type="int" />
+  </EntityType>
+  <EntityType Name="Center_Money">
+    <Key>
+      <PropertyRef Name="CM_id" />
+    </Key>
+    <Property Name="CM_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CMMoney" Type="float" />
+    <Property Name="CMTime" Type="datetime" />
+    <Property Name="UserInfo_Id" Type="int" />
+    <Property Name="SJ_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="CollectInfo">
+    <Key>
+      <PropertyRef Name="CollectInfo_Id" />
+    </Key>
+    <Property Name="CollectInfo_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GoodsInfo_Id" Type="int" />
+    <Property Name="UserInfo_Id" Type="int" />
+    <Property Name="CI_time" Type="date" />
+    <Property Name="CI_Remark" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="DataList">
+    <Key>
+      <PropertyRef Name="GoodsInfo_Id" />
+    </Key>
+    <Property Name="GoodsInfo_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GIName" Type="varchar" MaxLength="64" />
+    <Property Name="GoodsType_id" Type="int" />
+    <Property Name="GoodsImgs_id" Type="int" />
+    <Property Name="GIPrice" Type="float" />
+    <Property Name="GIItem" Type="varchar" MaxLength="64" />
+    <Property Name="GIShangShi" Type="datetime" />
+    <Property Name="GICPU" Type="varchar" MaxLength="64" />
+    <Property Name="GIPingMu" Type="varchar" MaxLength="64" />
+    <Property Name="GIFenBianLv" Type="varchar" MaxLength="64" />
+    <Property Name="GIHouDu" Type="varchar" MaxLength="64" />
+    <Property Name="GIDianChi" Type="varchar" MaxLength="64" />
+    <Property Name="GINeiCun" Type="varchar" MaxLength="64" />
+    <Property Name="GIKuCun" Type="int" />
+    <Property Name="CIXiaoLiang" Type="int" />
+    <Property Name="IsNew" Type="int" />
+    <Property Name="IsHot" Type="int" />
+    <Property Name="IsDown" Type="int" />
+    <Property Name="GIRemark" Type="varchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="GoodsDetailsIMG">
+    <Key>
+      <PropertyRef Name="GoodsDetailsIMG" />
+    </Key>
+    <Property Name="GoodsDetailsIMG" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GoodsInfo_id" Type="int" />
+    <Property Name="GoodsDetailsIMG_thumbone" Type="varchar" MaxLength="256" />
+    <Property Name="GoodsDetailsIMG_thumbtwo" Type="varchar" MaxLength="256" />
+    <Property Name="GoodsDetailsIMG_thumbthree" Type="varchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="GoodsImgs">
+    <Key>
+      <PropertyRef Name="GImgs_id" />
+    </Key>
+    <Property Name="GImgs_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GImgs_thumbone" Type="varchar" MaxLength="256" />
+    <Property Name="GImgs_thumbtwo" Type="varchar" MaxLength="256" />
+    <Property Name="GImgs_thumbthree" Type="varchar" MaxLength="256" />
+    <Property Name="GImgs_thumbfour" Type="varchar" MaxLength="256" />
+    <Property Name="GImgs_text" Type="text" />
+  </EntityType>
+  <EntityType Name="GoodsInfo">
+    <Key>
+      <PropertyRef Name="GoodsInfo_Id" />
+    </Key>
+    <Property Name="GoodsInfo_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GIName" Type="varchar" MaxLength="64" />
+    <Property Name="GoodsType_id" Type="int" />
+    <Property Name="GoodsImgs_id" Type="int" />
+    <Property Name="GIPrice" Type="float" />
+    <Property Name="GIItem" Type="varchar" MaxLength="64" />
+    <Property Name="GIShangShi" Type="datetime" />
+    <Property Name="GICPU" Type="varchar" MaxLength="64" />
+    <Property Name="GIPingMu" Type="varchar" MaxLength="64" />
+    <Property Name="GIFenBianLv" Type="varchar" MaxLength="64" />
+    <Property Name="GIHouDu" Type="varchar" MaxLength="64" />
+    <Property Name="GIDianChi" Type="varchar" MaxLength="64" />
+    <Property Name="GINeiCun" Type="varchar" MaxLength="64" />
+    <Property Name="GIKuCun" Type="int" />
+    <Property Name="CIXiaoLiang" Type="int" />
+    <Property Name="IsNew" Type="int" />
+    <Property Name="IsHot" Type="int" />
+    <Property Name="IsDown" Type="int" />
+    <Property Name="GIRemark" Type="varchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="GoodType">
+    <Key>
+      <PropertyRef Name="GoodType_Id" />
+    </Key>
+    <Property Name="GoodType_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GTName" Type="varchar" MaxLength="64" />
+    <Property Name="GTRemark" Type="varchar" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="KeFu">
+    <Key>
+      <PropertyRef Name="KF_id" />
+    </Key>
+    <Property Name="KF_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserInfo_Id" Type="int" />
+    <Property Name="SJ_Id" Type="int" />
+    <Property Name="KF_GoodsInfo_Id" Type="int" />
+    <Property Name="UserInfo_time" Type="datetime" />
+    <Property Name="UserInfo_rcontent" Type="text" />
+    <Property Name="KF_rcontent" Type="text" />
+    <Property Name="KF_rtime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="OrderInfo">
+    <Key>
+      <PropertyRef Name="OrderInfo_Id" />
+    </Key>
+    <Property Name="OrderInfo_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserInfo_Id" Type="int" />
+    <Property Name="GoodsInfo_Id" Type="int" />
+    <Property Name="OrderState" Type="int" />
+    <Property Name="ShouAddress" Type="varchar" MaxLength="256" />
+    <Property Name="UserRemark" Type="varchar" MaxLength="200" />
+    <Property Name="StoryRemark" Type="varchar" MaxLength="200" />
+    <Property Name="SongHuoTime" Type="int" />
+    <Property Name="is_tuikuan" Type="int" />
+    <Property Name="sp_numt" Type="int" />
+    <Property Name="OrderInfo_time" Type="datetime" />
+  </EntityType>
+  <EntityType Name="pingjia">
+    <Key>
+      <PropertyRef Name="PJ_Id" />
+    </Key>
+    <Property Name="PJ_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserInfo_Id" Type="int" />
+    <Property Name="PJ_GoodsInfo_Id" Type="int" />
+    <Property Name="PJ_etime" Type="date" />
+    <Property Name="PJ_content" Type="text" />
+    <Property Name="PJ_rcontent" Type="text" />
+    <Property Name="PJ_rtime" Type="date" />
+    <Property Name="SJ_Id" Type="int" />
+    <Property Name="PJ_rank" Type="int" />
+  </EntityType>
+  <EntityType Name="Shangjia_X_GoodsInfo">
+    <Key>
+      <PropertyRef Name="SXG" />
+    </Key>
+    <Property Name="SXG" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Store_Id" Type="int" />
+    <Property Name="GoodsInfo_Id" Type="int" />
+    <Property Name="GIZheKou" Type="float" />
+  </EntityType>
+  <EntityType Name="ShopCartInfo">
+    <Key>
+      <PropertyRef Name="SC_Id" />
+    </Key>
+    <Property Name="SC_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GoodsInfo_Id" Type="int" />
+    <Property Name="UserInfo_Id" Type="int" />
+    <Property Name="SC_addtime" Type="date" />
+    <Property Name="SC_price" Type="float" />
+    <Property Name="SC_number" Type="int" />
+    <Property Name="Remark" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="ShouAddress">
+    <Key>
+      <PropertyRef Name="ShouAddress_Id" />
+    </Key>
+    <Property Name="ShouAddress_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserInfo_Id" Type="int" />
+    <Property Name="SAName" Type="varchar" MaxLength="10" />
+    <Property Name="SAPhone" Type="varchar" MaxLength="11" />
+    <Property Name="SAAddress" Type="varchar" MaxLength="256" />
+    <Property Name="IsDefault" Type="int" />
+  </EntityType>
+  <EntityType Name="StoreInfo">
+    <Key>
+      <PropertyRef Name="StoreInfo_Id" />
+    </Key>
+    <Property Name="StoreInfo_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AdminInfo_Id" Type="int" />
+    <Property Name="SImg" Type="varchar" MaxLength="64" />
+    <Property Name="SName" Type="varchar" MaxLength="32" />
+    <Property Name="SBankcard" Type="varchar" MaxLength="64" />
+    <Property Name="SAddTime" Type="datetime" />
+    <Property Name="SIDCard" Type="varchar" MaxLength="18" />
+    <Property Name="SRemark" Type="varchar" MaxLength="64" />
+  </EntityType>
+  <EntityType Name="UserDetails">
+    <Key>
+      <PropertyRef Name="UserDetails_Id" />
+    </Key>
+    <Property Name="UserDetails_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserInfo_Id" Type="int" />
+    <Property Name="UDImg" Type="varchar" MaxLength="64" />
+    <Property Name="UDName" Type="varchar" MaxLength="10" />
+    <Property Name="UDSex" Type="char" MaxLength="2" />
+    <Property Name="UDIDCard" Type="varchar" MaxLength="18" />
+    <Property Name="UDBankcard" Type="varchar" MaxLength="64" />
+    <Property Name="UDZF_password" Type="varchar" MaxLength="6" />
+    <Property Name="UDAddTime" Type="datetime" />
+    <Property Name="UDRemark" Type="varchar" MaxLength="64" />
+  </EntityType>
+  <EntityType Name="UserInfo">
+    <Key>
+      <PropertyRef Name="UserInfo_Id" />
+    </Key>
+    <Property Name="UserInfo_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="varchar" MaxLength="64" />
+    <Property Name="UserPhone" Type="varchar" MaxLength="11" />
+    <Property Name="UserPwd" Type="varchar" MaxLength="64" />
+  </EntityType>
+</Schema>

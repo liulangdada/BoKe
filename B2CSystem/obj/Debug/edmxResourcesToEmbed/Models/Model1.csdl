@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="B2CSystemModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="B2CSystemEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="AdminInfo" EntityType="B2CSystemModel.AdminInfo" />
+    <EntitySet Name="Center_Money" EntityType="B2CSystemModel.Center_Money" />
+    <EntitySet Name="CollectInfo" EntityType="B2CSystemModel.CollectInfo" />
+    <EntitySet Name="DataList" EntityType="B2CSystemModel.DataList" />
+    <EntitySet Name="GoodsDetailsIMG" EntityType="B2CSystemModel.GoodsDetailsIMG" />
+    <EntitySet Name="GoodsImgs" EntityType="B2CSystemModel.GoodsImgs" />
+    <EntitySet Name="GoodsInfo" EntityType="B2CSystemModel.GoodsInfo" />
+    <EntitySet Name="GoodType" EntityType="B2CSystemModel.GoodType" />
+    <EntitySet Name="KeFu" EntityType="B2CSystemModel.KeFu" />
+    <EntitySet Name="OrderInfo" EntityType="B2CSystemModel.OrderInfo" />
+    <EntitySet Name="pingjia" EntityType="B2CSystemModel.pingjia" />
+    <EntitySet Name="Shangjia_X_GoodsInfo" EntityType="B2CSystemModel.Shangjia_X_GoodsInfo" />
+    <EntitySet Name="ShopCartInfo" EntityType="B2CSystemModel.ShopCartInfo" />
+    <EntitySet Name="ShouAddress" EntityType="B2CSystemModel.ShouAddress" />
+    <EntitySet Name="StoreInfo" EntityType="B2CSystemModel.StoreInfo" />
+    <EntitySet Name="UserDetails" EntityType="B2CSystemModel.UserDetails" />
+    <EntitySet Name="UserInfo" EntityType="B2CSystemModel.UserInfo" />
+  </EntityContainer>
+  <EntityType Name="AdminInfo">
+    <Key>
+      <PropertyRef Name="AdminInfo_Id" />
+    </Key>
+    <Property Name="AdminInfo_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="AIAccount" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="AIPwd" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="AIName" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="AIImg" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="IsSa" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Center_Money">
+    <Key>
+      <PropertyRef Name="CM_id" />
+    </Key>
+    <Property Name="CM_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="CMMoney" Type="Double" />
+    <Property Name="CMTime" Type="DateTime" Precision="3" />
+    <Property Name="UserInfo_Id" Type="Int32" />
+    <Property Name="SJ_Id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="CollectInfo">
+    <Key>
+      <PropertyRef Name="CollectInfo_Id" />
+    </Key>
+    <Property Name="CollectInfo_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="GoodsInfo_Id" Type="Int32" />
+    <Property Name="UserInfo_Id" Type="Int32" />
+    <Property Name="CI_time" Type="DateTime" Precision="0" />
+    <Property Name="CI_Remark" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="DataList">
+    <Key>
+      <PropertyRef Name="GoodsInfo_Id" />
+    </Key>
+    <Property Name="GoodsInfo_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="GIName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GoodsType_id" Type="Int32" />
+    <Property Name="GoodsImgs_id" Type="Int32" />
+    <Property Name="GIPrice" Type="Double" />
+    <Property Name="GIItem" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GIShangShi" Type="DateTime" Precision="3" />
+    <Property Name="GICPU" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GIPingMu" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GIFenBianLv" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GIHouDu" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GIDianChi" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GINeiCun" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GIKuCun" Type="Int32" />
+    <Property Name="CIXiaoLiang" Type="Int32" />
+    <Property Name="IsNew" Type="Int32" />
+    <Property Name="IsHot" Type="Int32" />
+    <Property Name="IsDown" Type="Int32" />
+    <Property Name="GIRemark" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="GoodsDetailsIMG">
+    <Key>
+      <PropertyRef Name="GoodsDetailsIMG1" />
+    </Key>
+    <Property Name="GoodsDetailsIMG1" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="GoodsInfo_id" Type="Int32" />
+    <Property Name="GoodsDetailsIMG_thumbone" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+    <Property Name="GoodsDetailsIMG_thumbtwo" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+    <Property Name="GoodsDetailsIMG_thumbthree" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="GoodsImgs">
+    <Key>
+      <PropertyRef Name="GImgs_id" />
+    </Key>
+    <Property Name="GImgs_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="GImgs_thumbone" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+    <Property Name="GImgs_thumbtwo" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+    <Property Name="GImgs_thumbthree" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+    <Property Name="GImgs_thumbfour" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+    <Property Name="GImgs_text" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="GoodsInfo">
+    <Key>
+      <PropertyRef Name="GoodsInfo_Id" />
+    </Key>
+    <Property Name="GoodsInfo_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="GIName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GoodsType_id" Type="Int32" />
+    <Property Name="GoodsImgs_id" Type="Int32" />
+    <Property Name="GIPrice" Type="Double" />
+    <Property Name="GIItem" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GIShangShi" Type="DateTime" Precision="3" />
+    <Property Name="GICPU" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GIPingMu" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GIFenBianLv" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GIHouDu" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GIDianChi" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GINeiCun" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GIKuCun" Type="Int32" />
+    <Property Name="CIXiaoLiang" Type="Int32" />
+    <Property Name="IsNew" Type="Int32" />
+    <Property Name="IsHot" Type="Int32" />
+    <Property Name="IsDown" Type="Int32" />
+    <Property Name="GIRemark" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="GoodType">
+    <Key>
+      <PropertyRef Name="GoodType_Id" />
+    </Key>
+    <Property Name="GoodType_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="GTName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="GTRemark" Type="String" MaxLength="128" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="KeFu">
+    <Key>
+      <PropertyRef Name="KF_id" />
+    </Key>
+    <Property Name="KF_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserInfo_Id" Type="Int32" />
+    <Property Name="SJ_Id" Type="Int32" />
+    <Property Name="KF_GoodsInfo_Id" Type="Int32" />
+    <Property Name="UserInfo_time" Type="DateTime" Precision="3" />
+    <Property Name="UserInfo_rcontent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="KF_rcontent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="KF_rtime" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="OrderInfo">
+    <Key>
+      <PropertyRef Name="OrderInfo_Id" />
+    </Key>
+    <Property Name="OrderInfo_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserInfo_Id" Type="Int32" />
+    <Property Name="GoodsInfo_Id" Type="Int32" />
+    <Property Name="OrderState" Type="Int32" />
+    <Property Name="ShouAddress" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+    <Property Name="UserRemark" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="StoryRemark" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="SongHuoTime" Type="Int32" />
+    <Property Name="is_tuikuan" Type="Int32" />
+    <Property Name="sp_numt" Type="Int32" />
+    <Property Name="OrderInfo_time" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="pingjia">
+    <Key>
+      <PropertyRef Name="PJ_Id" />
+    </Key>
+    <Property Name="PJ_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserInfo_Id" Type="Int32" />
+    <Property Name="PJ_GoodsInfo_Id" Type="Int32" />
+    <Property Name="PJ_etime" Type="DateTime" Precision="0" />
+    <Property Name="PJ_content" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="PJ_rcontent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="PJ_rtime" Type="DateTime" Precision="0" />
+    <Property Name="SJ_Id" Type="Int32" />
+    <Property Name="PJ_rank" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Shangjia_X_GoodsInfo">
+    <Key>
+      <PropertyRef Name="SXG" />
+    </Key>
+    <Property Name="SXG" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Store_Id" Type="Int32" />
+    <Property Name="GoodsInfo_Id" Type="Int32" />
+    <Property Name="GIZheKou" Type="Double" />
+  </EntityType>
+  <EntityType Name="ShopCartInfo">
+    <Key>
+      <PropertyRef Name="SC_Id" />
+    </Key>
+    <Property Name="SC_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="GoodsInfo_Id" Type="Int32" />
+    <Property Name="UserInfo_Id" Type="Int32" />
+    <Property Name="SC_addtime" Type="DateTime" Precision="0" />
+    <Property Name="SC_price" Type="Double" />
+    <Property Name="SC_number" Type="Int32" />
+    <Property Name="Remark" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="ShouAddress">
+    <Key>
+      <PropertyRef Name="ShouAddress_Id" />
+    </Key>
+    <Property Name="ShouAddress_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserInfo_Id" Type="Int32" />
+    <Property Name="SAName" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="SAPhone" Type="String" MaxLength="11" Unicode="false" FixedLength="false" />
+    <Property Name="SAAddress" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+    <Property Name="IsDefault" Type="Int32" />
+  </EntityType>
+  <EntityType Name="StoreInfo">
+    <Key>
+      <PropertyRef Name="StoreInfo_Id" />
+    </Key>
+    <Property Name="StoreInfo_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="AdminInfo_Id" Type="Int32" />
+    <Property Name="SImg" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="SName" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+    <Property Name="SBankcard" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="SAddTime" Type="DateTime" Precision="3" />
+    <Property Name="SIDCard" Type="String" MaxLength="18" Unicode="false" FixedLength="false" />
+    <Property Name="SRemark" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="UserDetails">
+    <Key>
+      <PropertyRef Name="UserDetails_Id" />
+    </Key>
+    <Property Name="UserDetails_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserInfo_Id" Type="Int32" />
+    <Property Name="UDImg" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="UDName" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="UDSex" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
+    <Property Name="UDIDCard" Type="String" MaxLength="18" Unicode="false" FixedLength="false" />
+    <Property Name="UDBankcard" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="UDZF_password" Type="String" MaxLength="6" Unicode="false" FixedLength="false" />
+    <Property Name="UDAddTime" Type="DateTime" Precision="3" />
+    <Property Name="UDRemark" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="UserInfo">
+    <Key>
+      <PropertyRef Name="UserInfo_Id" />
+    </Key>
+    <Property Name="UserInfo_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+    <Property Name="UserPhone" Type="String" MaxLength="11" Unicode="false" FixedLength="false" />
+    <Property Name="UserPwd" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,162 @@
+﻿@{
+    ViewBag.Title = "Zhuce";
+}
+
+<link href="~/css/LoginAndRegister/style.css" rel="stylesheet" />
+<script src="~/js/jquery-1.9.1.min.js"></script>
+<script src="~/js/LoginAndRegister/common.js"></script>
+<!--背景图片自动更换-->
+<script src="~/js/LoginAndRegister/supersized.3.2.7.min.js"></script>
+<script src="~/js/supersized-init.js"></script>
+<!--表单验证-->
+<script src="~/js/LoginAndRegister/jquery.validate.min.js"></script>
+<script src="~/js/layer/layer.js"></script>
+
+
+<script>
+
+    $(function () {
+        //单击注册按钮
+        $(".add").click(function () {
+            $.post("/LoginAndRegister/PDYZM", { yzm: $("#phone_yzm").val() }, function (res) {
+                if (parseInt(res) == 0) {
+                    //layer.open({
+                    //    title: "温馨提示",
+                    //    content: "验证码错误，请重新发送!",
+                    //    btn: ["确定"],
+                    //    btn1: function () {
+                    //        layer.closeAll();
+                    //    }
+                    //})
+                } else {
+                    $("#registerForm").submit();
+                }
+            })
+        })
+
+
+        //用户名框框鼠标离开事件 判断该用户名是否存在
+        $(".username").blur(function () {
+            var username = $(".username").val();
+            $.post("/LoginAndRegister/UserNameIsREV", { username: username }, function (res) {
+                if (res == "false") {
+                    $("#username-error").show().text("该用户名已存在");
+                } else {
+                    if (username.length < 3) {
+                        $("#username-error").show().text("用户名至少为3个字符");
+                    } else {
+                        $("#username-error").hide();
+                    }
+                }
+            })
+        })
+
+        //判断密码长度是否为6位  password-error
+        $(".password").blur(function () {
+            var password = $(".password").val();
+            if (password.length < 6) {
+                $("#password-error").show().text("密码至少为6个字符");
+            } else {
+                $("#password-error").hide();
+            }
+        })
+
+
+        //判断手机号是否注册过
+
+
+
+
+
+        var num = 0;
+
+        //发送验证码
+        $("#sendyzm").click(function () {
+
+            num = Math.ceil((Math.random() * 1000000 + 1000000)).toString().substr(0, 6);
+            $.post("/LoginAndRegister/sendYZM", { num: num, phone: $("#number").val() }, function (res) {
+                //layer.open({
+                //    title: "温馨提示",
+                //    content: "发送成功!",
+                //    btn: ["确定"],
+                //    btn1: function () {
+                //        layer.closeAll();
+                //    }
+                //})
+            })
+            $("#phone_yzm").attr("disabled", false);
+        });
+
+
+
+        //验证验证码
+        $("#phone_yzm").blur(function () {
+            var inputnum = $("#phone_yzm").val();
+            //alert(inputnum);
+            if (num == inputnum && num != 0 && inputnum != "") {
+                $("#phone_yzm-error").hide();
+            } else {
+                // $("#phone_yzm").attr("aria-invalid", "true");
+                $("#phone_yzm-error").show().text("验证码不一致");
+            }
+        });
+
+        $("#submit").click(function () {
+            //判断是否有不合格的数据
+            var error = $(".error");
+            var i = 0;
+            $(error).each(function (index, item) {
+                console.log($(item).html());
+                if ($(item).html() == "" || $(item).html() == null) {
+                    i = 1;
+                }
+            })
+            if (i != 0) {
+                //layer.open({
+                //    title: "温馨提示",
+                //    content: "信息填写有误!",
+                //    btn: ["确定"],
+                //    btn1: function () {
+                //        layer.closeAll();
+                //    }
+                //})
+                alert("有错误");
+            } else {
+                alert("keyizhuce ");
+            }
+        })
+
+
+
+    });
+
+</script>
+
+<div class="register-container" style="margin-top: 15px;">
+    <h1>register</h1>
+
+    <form action="/LoginAndRegister/UserZhuce" method="post" id="registerForm">
+        <div>
+            <input type="text" name="UserName" class="username" id="username" placeholder="您的用户名" autocomplete="off" />
+            <label id="username-error" class="error" for="username" style="display: none;"></label>
+        </div>
+        <div>
+            <input type="password" name="UserPwd" class="password" id="password" placeholder="输入密码" oncontextmenu="return false" onpaste="return false" />
+            <label id="password-error" class="error" for="password" style="display: none;"></label>
+        </div>
+        <div>
+            <input type="text" name="UserPhone" class="phone_number" placeholder="输入手机号码" autocomplete="off" id="number" />
+            <button type="button" id="sendyzm" class="register-tis" style="width: 270px; height: 42px;">发送验证码</button>
+        </div>
+        <div>
+            <input type="text" name="phone_yzm" id="phone_yzm" disabled="disabled" class="phone_yzm" placeholder="输入验证码" oncontextmenu="return false" onpaste="return false" />
+            <label id="phone_yzm-error" class="error" for="phone_yzm" style="display: none;"></label>
+        </div>
+
+        <button class="add" type="button">注 册</button>
+    </form>
+    <a href="/LoginAndRegister/Login">
+        <button type="button" class="register-tis">已经有账号？</button>
+    </a>
+
+</div>

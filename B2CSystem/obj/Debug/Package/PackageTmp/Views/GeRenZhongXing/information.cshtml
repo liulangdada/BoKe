@@ -1,0 +1,215 @@
+﻿@{
+    ViewBag.Title = "information";
+    Layout = "/Views/GeRenZhongXing/gerenzhongxing_Layout.cshtml";
+}
+
+@*
+个人信息
+<link href="~/css/GenRenZhongXing/admin.css" rel="stylesheet" type="text/css" />
+<link href="~/css/GenRenZhongXing/amazeui.css" rel="stylesheet" type="text/css" />
+
+<link href="~/css/GenRenZhongXing/personal.css" rel="stylesheet" />
+<link href="~/css/GenRenZhongXing/infstyle.css" rel="stylesheet" />*@
+<script src="~/js/GenRenZhongXing/jquery-1.7.1.js"></script>
+@*<script src="~/js/GenRenZhongXing/jquery.min.js"></script>*@
+<script src="~/js/GenRenZhongXing/amazeui.js"></script>
+
+@* 弹窗 *@
+<link href="~/js/layer/mobile/need/layer.css" rel="stylesheet" />
+<script src="~/js/layer/layer.js"></script>
+
+@* 我们上传图片 *@
+
+<script src="~/js/GenRenZhongXing/ajaxfileupload.js"></script>
+<script>
+    $(function () {
+        //修改电话号码时候进行提示
+        $("#user-phone").focusout(function () {
+            layer.open({
+                title: "温馨提示",
+                content: "电话号码就是你的账号哦，小心修改哦"
+
+            })
+
+        });
+
+        //点击确认修改
+        $("#div_btn").click(function () {
+            var nicheng = $("#user-name2").val();
+            var name = $("#Text1").val();
+            var sex = $(".sex:checked").val();
+            var iphone = $("#user-phone").val();
+            var jsonstr = nicheng + "," + name + "," + sex + "," + iphone;
+
+            $.post("/GeRenZhongXing/information1", { jsonstr: jsonstr }, function (stat) {
+                if (stat >= 1) {
+                    alert("修改成功");
+                } else {
+                    alert("修改失败");
+                }
+            });
+        });
+
+        $("#files").change(function () {
+            if ($("#files").val().length > 0) {
+                ajaxupfile();
+            }
+            else {
+                alert("请选择图片");
+            }
+
+
+
+        });
+    })
+    function ajaxupfile() {
+        $.ajaxFileUpload({
+            url: "/GeRenZhongXing/information2", //用于文件上传的服务器端请求地址
+            type: "post",
+            secureuri: false, //是否需要安全协议，一般设置为false
+            fileElementId: "files", //文件上传域的ID
+            dataType: "json", //返回值类型 一般设置为json
+            success: function (data, status)  //服务器成功响应处理函数
+            {
+                alert(data);
+                //if (data.row > 0) {
+                //    alert(data.imgpath)
+                //    $("#img1").prop("src", data.imgpath);
+                //} else {
+                //    alert("修改失败");
+                //}
+
+            },
+            error: function (data, status, e)//服务器响应失败处理函数
+            {
+                alert(e);
+            }
+        });
+        return false;
+    }
+
+
+
+
+
+</script>
+
+<div class="center">
+    <div class="col-main">
+        <div class="main-wrap">
+            @{  B2CSystem.Models.UserDetails ud = ViewBag.ud;
+                string name = ViewBag.name;
+                string iphone = ViewBag.iphone;
+                string brithday = ViewBag.brithday;
+            }
+            <div class="user-info">
+                <!--标题 -->
+                <div class="am-cf am-padding">
+                    <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">个人资料</strong> / <small>Personal&nbsp;information</small></div>
+                </div>
+                <hr />
+
+                <!--头像 -->
+                <div class="user-infoPic">
+
+                    <div class="filePic">
+                        @*       <input type="file" class="inputPic" allowexts="gif,jpeg,jpg,png,bmp" accept="image/*" id="input_img">*@
+                        <input type="file" class="inputPic" id="files" name="file" />
+                        <a id="img_file">
+                            <img class="am-circle am-img-thumbnail" src="@ud.UDImg" alt=""  id="img1"/>
+                        </a>
+                    </div>
+
+                    <p class="am-form-help">头像</p>
+
+                    <div class="info-m">
+                        <div><b>用户名：<i>@ud.UDName</i></b></div>
+
+                        <div class="u-safety">
+                            <a href="safety.html">账户安全
+									<span class="u-profile"><i class="bc_ee0000" style="width: 60px;" width="0">60分</i></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--个人信息 -->
+                <div class="info-main">
+                    <form class="am-form am-form-horizontal" id="form1" method="post" action="/GeRenZhongXing/information1">
+
+                        <div class="am-form-group">
+                            <label for="user-name2" class="am-form-label">昵称</label>
+                            <div class="am-form-content">
+                                <input type="text" id="user-name2" placeholder="nickname" value="@name" name="nicheng">
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-form-label">姓名</label>
+                            <div class="am-form-content">
+                                <input type="text" id="Text1" placeholder="name" value="@ud.UDName" name="name">
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label class="am-form-label">性别</label>
+                            <div class="am-form-content sex">
+
+                                <input type="radio" name="radio10" id="sex_nan" class="sex" value="男"><span>男</span>
+
+                                <input type="radio" name="radio10" id="sex_nv" class="sex" value="女"><span>女</span>
+
+                                @{string sex = @ud.UDSex;
+                                  if (sex.Equals("男"))
+                                    <script>
+                                        $(function () {
+                                            $("#sex_nan").prop("checked", "checked");
+                                        })
+                                    </script>
+                                }
+
+                                @{if (sex.Equals("女"))
+                                  {
+                                    <script>
+                                        $(function () {
+                                            $("#sex_nv").prop("checked", "checked");
+                                        })
+                                    </script>
+                                  }
+                                }
+
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="user-birth" class="am-form-label">生日</label>
+                            <div class="am-form-content">
+                                <input type="text" id="date" value="@brithday" style="width: 100px;"  readonly="true" />
+                            </div>
+
+                        </div>
+                        <div class="am-form-group">
+                            <label for="user-phone" class="am-form-label">电话</label>
+                            <div class="am-form-content">
+                                <input id="user-phone" placeholder="telephonenumber" type="tel" value="@iphone" name="iphone">
+                            </div>
+                        </div>
+
+
+                        <div class="info-btn">
+                            <div class="am-btn am-btn-danger" id="div_btn">保存修改</div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+

@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="B2CSystemModelStoreContainer" CdmEntityContainer="B2CSystemEntities">
+    <EntitySetMapping Name="AdminInfo">
+      <EntityTypeMapping TypeName="B2CSystemModel.AdminInfo">
+        <MappingFragment StoreEntitySet="AdminInfo">
+          <ScalarProperty Name="AdminInfo_Id" ColumnName="AdminInfo_Id" />
+          <ScalarProperty Name="AIAccount" ColumnName="AIAccount" />
+          <ScalarProperty Name="AIPwd" ColumnName="AIPwd" />
+          <ScalarProperty Name="AIName" ColumnName="AIName" />
+          <ScalarProperty Name="AIImg" ColumnName="AIImg" />
+          <ScalarProperty Name="IsSa" ColumnName="IsSa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Center_Money">
+      <EntityTypeMapping TypeName="B2CSystemModel.Center_Money">
+        <MappingFragment StoreEntitySet="Center_Money">
+          <ScalarProperty Name="CM_id" ColumnName="CM_id" />
+          <ScalarProperty Name="CMMoney" ColumnName="CMMoney" />
+          <ScalarProperty Name="CMTime" ColumnName="CMTime" />
+          <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+          <ScalarProperty Name="SJ_Id" ColumnName="SJ_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CollectInfo">
+      <EntityTypeMapping TypeName="B2CSystemModel.CollectInfo">
+        <MappingFragment StoreEntitySet="CollectInfo">
+          <ScalarProperty Name="CollectInfo_Id" ColumnName="CollectInfo_Id" />
+          <ScalarProperty Name="GoodsInfo_Id" ColumnName="GoodsInfo_Id" />
+          <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+          <ScalarProperty Name="CI_time" ColumnName="CI_time" />
+          <ScalarProperty Name="CI_Remark" ColumnName="CI_Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DataList">
+      <EntityTypeMapping TypeName="B2CSystemModel.DataList">
+        <MappingFragment StoreEntitySet="DataList">
+          <ScalarProperty Name="GoodsInfo_Id" ColumnName="GoodsInfo_Id" />
+          <ScalarProperty Name="GIName" ColumnName="GIName" />
+          <ScalarProperty Name="GoodsType_id" ColumnName="GoodsType_id" />
+          <ScalarProperty Name="GoodsImgs_id" ColumnName="GoodsImgs_id" />
+          <ScalarProperty Name="GIPrice" ColumnName="GIPrice" />
+          <ScalarProperty Name="GIItem" ColumnName="GIItem" />
+          <ScalarProperty Name="GIShangShi" ColumnName="GIShangShi" />
+          <ScalarProperty Name="GICPU" ColumnName="GICPU" />
+          <ScalarProperty Name="GIPingMu" ColumnName="GIPingMu" />
+          <ScalarProperty Name="GIFenBianLv" ColumnName="GIFenBianLv" />
+          <ScalarProperty Name="GIHouDu" ColumnName="GIHouDu" />
+          <ScalarProperty Name="GIDianChi" ColumnName="GIDianChi" />
+          <ScalarProperty Name="GINeiCun" ColumnName="GINeiCun" />
+          <ScalarProperty Name="GIKuCun" ColumnName="GIKuCun" />
+          <ScalarProperty Name="CIXiaoLiang" ColumnName="CIXiaoLiang" />
+          <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+          <ScalarProperty Name="IsHot" ColumnName="IsHot" />
+          <ScalarProperty Name="IsDown" ColumnName="IsDown" />
+          <ScalarProperty Name="GIRemark" ColumnName="GIRemark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GoodsDetailsIMG">
+      <EntityTypeMapping TypeName="B2CSystemModel.GoodsDetailsIMG">
+        <MappingFragment StoreEntitySet="GoodsDetailsIMG">
+          <ScalarProperty Name="GoodsDetailsIMG1" ColumnName="GoodsDetailsIMG" />
+          <ScalarProperty Name="GoodsInfo_id" ColumnName="GoodsInfo_id" />
+          <ScalarProperty Name="GoodsDetailsIMG_thumbone" ColumnName="GoodsDetailsIMG_thumbone" />
+          <ScalarProperty Name="GoodsDetailsIMG_thumbtwo" ColumnName="GoodsDetailsIMG_thumbtwo" />
+          <ScalarProperty Name="GoodsDetailsIMG_thumbthree" ColumnName="GoodsDetailsIMG_thumbthree" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GoodsImgs">
+      <EntityTypeMapping TypeName="B2CSystemModel.GoodsImgs">
+        <MappingFragment StoreEntitySet="GoodsImgs">
+          <ScalarProperty Name="GImgs_id" ColumnName="GImgs_id" />
+          <ScalarProperty Name="GImgs_thumbone" ColumnName="GImgs_thumbone" />
+          <ScalarProperty Name="GImgs_thumbtwo" ColumnName="GImgs_thumbtwo" />
+          <ScalarProperty Name="GImgs_thumbthree" ColumnName="GImgs_thumbthree" />
+          <ScalarProperty Name="GImgs_thumbfour" ColumnName="GImgs_thumbfour" />
+          <ScalarProperty Name="GImgs_text" ColumnName="GImgs_text" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GoodsInfo">
+      <EntityTypeMapping TypeName="B2CSystemModel.GoodsInfo">
+        <MappingFragment StoreEntitySet="GoodsInfo">
+          <ScalarProperty Name="GoodsInfo_Id" ColumnName="GoodsInfo_Id" />
+          <ScalarProperty Name="GIName" ColumnName="GIName" />
+          <ScalarProperty Name="GoodsType_id" ColumnName="GoodsType_id" />
+          <ScalarProperty Name="GoodsImgs_id" ColumnName="GoodsImgs_id" />
+          <ScalarProperty Name="GIPrice" ColumnName="GIPrice" />
+          <ScalarProperty Name="GIItem" ColumnName="GIItem" />
+          <ScalarProperty Name="GIShangShi" ColumnName="GIShangShi" />
+          <ScalarProperty Name="GICPU" ColumnName="GICPU" />
+          <ScalarProperty Name="GIPingMu" ColumnName="GIPingMu" />
+          <ScalarProperty Name="GIFenBianLv" ColumnName="GIFenBianLv" />
+          <ScalarProperty Name="GIHouDu" ColumnName="GIHouDu" />
+          <ScalarProperty Name="GIDianChi" ColumnName="GIDianChi" />
+          <ScalarProperty Name="GINeiCun" ColumnName="GINeiCun" />
+          <ScalarProperty Name="GIKuCun" ColumnName="GIKuCun" />
+          <ScalarProperty Name="CIXiaoLiang" ColumnName="CIXiaoLiang" />
+          <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+          <ScalarProperty Name="IsHot" ColumnName="IsHot" />
+          <ScalarProperty Name="IsDown" ColumnName="IsDown" />
+          <ScalarProperty Name="GIRemark" ColumnName="GIRemark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GoodType">
+      <EntityTypeMapping TypeName="B2CSystemModel.GoodType">
+        <MappingFragment StoreEntitySet="GoodType">
+          <ScalarProperty Name="GoodType_Id" ColumnName="GoodType_Id" />
+          <ScalarProperty Name="GTName" ColumnName="GTName" />
+          <ScalarProperty Name="GTRemark" ColumnName="GTRemark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KeFu">
+      <EntityTypeMapping TypeName="B2CSystemModel.KeFu">
+        <MappingFragment StoreEntitySet="KeFu">
+          <ScalarProperty Name="KF_id" ColumnName="KF_id" />
+          <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+          <ScalarProperty Name="SJ_Id" ColumnName="SJ_Id" />
+          <ScalarProperty Name="KF_GoodsInfo_Id" ColumnName="KF_GoodsInfo_Id" />
+          <ScalarProperty Name="UserInfo_time" ColumnName="UserInfo_time" />
+          <ScalarProperty Name="UserInfo_rcontent" ColumnName="UserInfo_rcontent" />
+          <ScalarProperty Name="KF_rcontent" ColumnName="KF_rcontent" />
+          <ScalarProperty Name="KF_rtime" ColumnName="KF_rtime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderInfo">
+      <EntityTypeMapping TypeName="B2CSystemModel.OrderInfo">
+        <MappingFragment StoreEntitySet="OrderInfo">
+          <ScalarProperty Name="OrderInfo_Id" ColumnName="OrderInfo_Id" />
+          <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+          <ScalarProperty Name="GoodsInfo_Id" ColumnName="GoodsInfo_Id" />
+          <ScalarProperty Name="OrderState" ColumnName="OrderState" />
+          <ScalarProperty Name="ShouAddress" ColumnName="ShouAddress" />
+          <ScalarProperty Name="UserRemark" ColumnName="UserRemark" />
+          <ScalarProperty Name="StoryRemark" ColumnName="StoryRemark" />
+          <ScalarProperty Name="SongHuoTime" ColumnName="SongHuoTime" />
+          <ScalarProperty Name="is_tuikuan" ColumnName="is_tuikuan" />
+          <ScalarProperty Name="sp_numt" ColumnName="sp_numt" />
+          <ScalarProperty Name="OrderInfo_time" ColumnName="OrderInfo_time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pingjia">
+      <EntityTypeMapping TypeName="B2CSystemModel.pingjia">
+        <MappingFragment StoreEntitySet="pingjia">
+          <ScalarProperty Name="PJ_Id" ColumnName="PJ_Id" />
+          <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+          <ScalarProperty Name="PJ_GoodsInfo_Id" ColumnName="PJ_GoodsInfo_Id" />
+          <ScalarProperty Name="PJ_etime" ColumnName="PJ_etime" />
+          <ScalarProperty Name="PJ_content" ColumnName="PJ_content" />
+          <ScalarProperty Name="PJ_rcontent" ColumnName="PJ_rcontent" />
+          <ScalarProperty Name="PJ_rtime" ColumnName="PJ_rtime" />
+          <ScalarProperty Name="SJ_Id" ColumnName="SJ_Id" />
+          <ScalarProperty Name="PJ_rank" ColumnName="PJ_rank" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Shangjia_X_GoodsInfo">
+      <EntityTypeMapping TypeName="B2CSystemModel.Shangjia_X_GoodsInfo">
+        <MappingFragment StoreEntitySet="Shangjia_X_GoodsInfo">
+          <ScalarProperty Name="SXG" ColumnName="SXG" />
+          <ScalarProperty Name="Store_Id" ColumnName="Store_Id" />
+          <ScalarProperty Name="GoodsInfo_Id" ColumnName="GoodsInfo_Id" />
+          <ScalarProperty Name="GIZheKou" ColumnName="GIZheKou" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShopCartInfo">
+      <EntityTypeMapping TypeName="B2CSystemModel.ShopCartInfo">
+        <MappingFragment StoreEntitySet="ShopCartInfo">
+          <ScalarProperty Name="SC_Id" ColumnName="SC_Id" />
+          <ScalarProperty Name="GoodsInfo_Id" ColumnName="GoodsInfo_Id" />
+          <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+          <ScalarProperty Name="SC_addtime" ColumnName="SC_addtime" />
+          <ScalarProperty Name="SC_price" ColumnName="SC_price" />
+          <ScalarProperty Name="SC_number" ColumnName="SC_number" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShouAddress">
+      <EntityTypeMapping TypeName="B2CSystemModel.ShouAddress">
+        <MappingFragment StoreEntitySet="ShouAddress">
+          <ScalarProperty Name="ShouAddress_Id" ColumnName="ShouAddress_Id" />
+          <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+          <ScalarProperty Name="SAName" ColumnName="SAName" />
+          <ScalarProperty Name="SAPhone" ColumnName="SAPhone" />
+          <ScalarProperty Name="SAAddress" ColumnName="SAAddress" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreInfo">
+      <EntityTypeMapping TypeName="B2CSystemModel.StoreInfo">
+        <MappingFragment StoreEntitySet="StoreInfo">
+          <ScalarProperty Name="StoreInfo_Id" ColumnName="StoreInfo_Id" />
+          <ScalarProperty Name="AdminInfo_Id" ColumnName="AdminInfo_Id" />
+          <ScalarProperty Name="SImg" ColumnName="SImg" />
+          <ScalarProperty Name="SName" ColumnName="SName" />
+          <ScalarProperty Name="SBankcard" ColumnName="SBankcard" />
+          <ScalarProperty Name="SAddTime" ColumnName="SAddTime" />
+          <ScalarProperty Name="SIDCard" ColumnName="SIDCard" />
+          <ScalarProperty Name="SRemark" ColumnName="SRemark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserDetails">
+      <EntityTypeMapping TypeName="B2CSystemModel.UserDetails">
+        <MappingFragment StoreEntitySet="UserDetails">
+          <ScalarProperty Name="UserDetails_Id" ColumnName="UserDetails_Id" />
+          <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+          <ScalarProperty Name="UDImg" ColumnName="UDImg" />
+          <ScalarProperty Name="UDName" ColumnName="UDName" />
+          <ScalarProperty Name="UDSex" ColumnName="UDSex" />
+          <ScalarProperty Name="UDIDCard" ColumnName="UDIDCard" />
+          <ScalarProperty Name="UDBankcard" ColumnName="UDBankcard" />
+          <ScalarProperty Name="UDZF_password" ColumnName="UDZF_password" />
+          <ScalarProperty Name="UDAddTime" ColumnName="UDAddTime" />
+          <ScalarProperty Name="UDRemark" ColumnName="UDRemark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserInfo">
+      <EntityTypeMapping TypeName="B2CSystemModel.UserInfo">
+        <MappingFragment StoreEntitySet="UserInfo">
+          <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
+          <ScalarProperty Name="UserPwd" ColumnName="UserPwd" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

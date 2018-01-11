@@ -1,0 +1,72 @@
+﻿@{
+    Layout = "/Views/Home_Layout.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+
+
+<link href="~/css/GenRenZhongXing/admin.css" rel="stylesheet" type="text/css" />
+<link href="~/css/GenRenZhongXing/amazeui.css" rel="stylesheet" type="text/css" />
+<link href="~/css/GenRenZhongXing/personal.css" rel="stylesheet" />
+
+<link href="~/css/GenRenZhongXing/infstyle.css" rel="stylesheet" />
+
+
+<body>
+    <div class="center">
+        <div class="col-main">
+            <div class="main-wrap">
+
+                @RenderBody()
+            </div>
+        </div>
+        <aside class="menu">
+            <ul>
+                <li class="person active">
+                    <a href="/gerenzhongxing/gerenzhongxing">个人中心</a>
+                </li>
+                <li class="person">
+                    <a href="#">个人资料</a>
+                    <ul>
+                        <li><a href="/gerenzhongxing/information">个人信息</a></li>
+                        <li><a href="/gerenzhongxing/safety">安全设置</a></li>
+                        <li><a href="/gerenzhongxing/address">收货地址</a></li>
+                    </ul>
+                </li>
+                <li class="person">
+                    <a href="#">我的交易</a>
+                    <ul>
+                        <li><a href="/gerenzhongxing/order">订单管理</a></li>
+                        <li><a href="change.html">退款售后</a></li>
+                    </ul>
+                </li>
+                <li class="person">
+                    <a href="#">我的资产</a>
+                    <ul>
+                        <li><a href="bill.html">账单明细</a></li>
+                    </ul>
+                </li>
+
+                <li class="person">
+                    <a href="#">我的小窝</a>
+                    <ul>
+                        <li><a href="collection.html">收藏</a></li>
+                        <li><a href="foot.html">足迹</a></li>
+                        <li><a href="comment.html">评价</a></li>
+                        <li><a href="news.html">消息</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+        </aside>
+    </div>
+
+</body>
+
+</html>

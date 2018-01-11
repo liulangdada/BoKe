@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<link href="~/css/LoginAndRegister/style.css" rel="stylesheet" />
+<script src="~/js/jquery-1.9.1.min.js"></script>
+<script src="~/js/LoginAndRegister/common.js"></script>
+<!--背景图片自动更换-->
+<script src="~/js/LoginAndRegister/supersized.3.2.7.min.js"></script>
+<script src="~/js/supersized-init.js"></script>
+<!--表单验证-->
+<script src="~/js/LoginAndRegister/jquery.validate.min.js"></script>
+
+
+<div class="login-container">
+    <h1>ShareLink</h1>
+
+    <div class="connect">
+        <p>Link the world. Share to world.</p>
+    </div>
+
+    <form action="/LoginAndRegister/UserLogin" method="post" id="loginForm">
+        <div>
+            @if (Session["UserPhone"] == null)
+            { 
+                <input type="text" name="username" class="username" placeholder="用户名" autocomplete="off" />
+            }
+            else
+            {
+                <input type="text" name="username" class="username" placeholder="用户名" autocomplete="off" value="@Session["UserPhone"].ToString()"/>
+            }
+        </div>
+        <div>
+            <input type="password" name="password" class="password" placeholder="密码" oncontextmenu="return false" onpaste="return false" />
+        </div>
+        <button id="submit" type="submit">登 陆</button>
+    </form>
+
+    <a href="/LoginAndRegister/Zhuce">
+        <button type="button" class="register-tis">还有没有账号？</button>
+    </a>
+
+</div>

@@ -1,0 +1,225 @@
+﻿@{
+    ViewBag.Title = "Cart";
+    Layout = "/Views/Home_Layout.cshtml";
+}
+@using B2CSystem.Models
+
+<link href="~/css/Cart/reset.css" rel="stylesheet" />
+<link href="~/css/Cart/carts.css" rel="stylesheet" />
+
+
+<script>
+    $(function () {
+
+        /*  var $allCheckbox = $('input[type="checkbox"]'),     //全局的全部checkbox
+                $wholeChexbox = $('.whole_check'),              //全选的checkbox
+                $cartBox = $('.cartBox'),                       //每个商铺盒子
+                $shopCheckbox = $('.shopChoice'),               //每个商铺的checkbox
+                $sonCheckBox = $('.son_check');                 //每个商铺下的商品的checkbox */
+
+        //结算
+        $(".calBtn a").click(function () {
+            if ($(this).hasClass('btn_sty')) {
+
+
+                var goodsids = "";    //所有选中商品的编号
+
+                var total_shop_name = "",   //店铺名称
+                    total_goods = "",   //商品信息
+                    total_price = "",   //商品单价
+                    total_info = "",    //商品参数
+                    total_count = "",   //商品数量
+                    total_sum = ""     //商品金额
+                $('.son_check').each(function () {
+                    if ($(this).is(':checked')) {
+                        var shop_name = $(this).parents('.cartBox').find('.shop_name a').text().trim();    //店铺名称
+                        var goods = $(this).parents('.order_lists').find('.list_con').text().trim();    //商品信息
+                        var info = $(this).parents('.order_lists').find('.list_info').text().trim();    //商品参数
+                        var price = $(this).parents('.order_lists').find('.list_price').text().trim();  //商品单价
+                        var amount = $(this).parents('.order_lists').find('.sum').val();                //商品数量
+                        var sum = $(this).parents('.order_lists').find('.list_sum').text().trim();      //商品金额
+
+                        //得到商品编号
+                        goodsids += $(this).parent().attr("goodsid").valueOf() + ",";
+
+                        total_shop_name += shop_name + ","
+                        total_goods += goods + ",";
+                        total_info += info + ",";
+                        total_price += price + ",";
+                        total_count += amount + ",";
+                        total_sum += sum + ",";
+                    }
+                });
+
+                //得到需要的参数
+                //alert("店铺名称：" + total_shop_name.substr(0, total_shop_name.length - 1));
+                //alert("商品信息：" + total_goods.substr(0, total_goods.length - 1));
+                //alert("商品参数：" + total_info.substr(0, total_info.length - 1));
+                //alert("商品单价：" + total_price.substr(0, total_price.length - 1));
+                //alert("商品数量：" + total_count.substr(0, total_count.length - 1));
+                //alert("商品金额：" + total_sum.substr(0, total_sum.length - 1));
+                goodsids = goodsids.substr(0, goodsids.length - 1);
+                var num = total_count.substr(0, total_count.length - 1);
+
+                //跳转至确认订单页面
+
+                location.href = "/Cart/Confirm?goodsids=" + goodsids + "&num=" + num;
+
+            }
+        });
+
+    });
+</script>
+
+
+<section class="cartMain">
+    <div class="cartMain_hd">
+        <ul class="order_lists cartTop">
+            <li class="list_chk">
+                <!--所有商品全选-->
+                <input type="checkbox" id="all" class="whole_check">
+                <label for="all"></label>
+                全选
+            </li>
+            <li class="list_con">商品信息</li>
+            <li class="list_info">商品参数</li>
+            <li class="list_price">单价</li>
+            <li class="list_amount">数量</li>
+            <li class="list_sum">金额</li>
+            <li class="list_op">操作</li>
+        </ul>
+    </div>
+
+    @{
+        List<GoodsInfo> coll = ViewBag.GoodsList as List<GoodsInfo>;
+        List<string> sList = ViewBag.sList as List<string>;
+        B2CSystemEntities1 b2c = new B2CSystemEntities1();
+    }
+    @if (sList != null)
+    {
+        int i = 0;
+        int j = 0;
+        foreach (var item in sList)
+        {
+
+            i++;
+            
+            
+        <div class="cartBox">
+            <div class="shop_info">
+                <div class="all_check">
+                    <!--店铺全选-->
+                    <input type="checkbox" id="shop_a @i"  class="shopChoice">
+                    <label for="shop_a @i" class="shop"></label>
+                </div>
+                <div class="shop_name">
+                    店铺：<a class="store" style="color: blue;">@item</a>
+                </div>
+            </div>
+
+
+
+            @foreach (var co in coll)
+            {
+@* 根据商品编号得到商品的店铺编号 *@
+                j++;
+
+                int? storeid = b2c.Shangjia_X_GoodsInfo.Where(a => a.GoodsInfo_Id == co.GoodsInfo_Id).FirstOrDefault().Store_Id;
+                if (b2c.StoreInfo.Where(a => a.StoreInfo_Id == storeid).FirstOrDefault().SName == item)
+                { 
+                
+                
+                <div class="order_content">
+                    <ul class="order_lists">
+                        <li class="list_chk" goodsid="@co.GoodsInfo_Id">
+                            <input type="checkbox" id="checkbox_2 @j" class="son_check">
+                            <label for="checkbox_2 @j"></label>
+                        </li>
+                        <li class="list_con">
+                            <div class="list_img">
+                                <a href="javascript:;">
+                                    @* 根据商品图片编号 得到商铺图片路径 *@
+                                    @{
+                    string img = b2c.GoodsImgs.Where(a => a.GImgs_id == co.GoodsImgs_id).FirstOrDefault().GImgs_thumbone;
+                                    }
+                                    <img src="@img" alt=""></a>
+                            </div>
+                            @* 根据商品编号 查看商品商品详细信息 *@
+                            @{
+                    string GIName = b2c.GoodsInfo.Where(a => a.GoodsInfo_Id == co.GoodsInfo_Id).FirstOrDefault().GIName;
+                            }
+                            <div class="list_text"><a href="~/XiangXi/XiangXi?sp_id=@co.GoodsInfo_Id";">@GIName</a></div>
+                        </li>
+                        <li class="list_info">
+                            <p>规格：默认</p>
+                            <p>尺寸：@co.GIPingMu</p>
+                            <p>类型：@b2c.GoodType.Where(a => a.GoodType_Id == co.GoodsType_id).FirstOrDefault().GTName</p>
+                            <p>厚度：@co.GIHouDu</p>
+                        </li>
+                        @* =======        根据商品编号与用户编号 得到他收藏的数量               ========================= *@
+                        @{
+                    UserInfo user = Session["user"] as UserInfo;
+                    int userid = user.UserInfo_Id;
+                    int? num = b2c.ShopCartInfo.Where(a => a.GoodsInfo_Id == co.GoodsInfo_Id && a.UserInfo_Id == userid).FirstOrDefault().SC_number;
+                        }
+                        <li class="list_price">
+                            @{
+                    //通过goodsid得到该商品的折扣
+                    double? ZheKou = b2c.Shangjia_X_GoodsInfo.Where(a => a.GoodsInfo_Id == co.GoodsInfo_Id).FirstOrDefault().GIZheKou;
+                    double? price = ZheKou * co.GIPrice;
+                            }
+                            <p class="price">￥@price</p>
+                        </li>
+                        <li class="list_amount">
+                            <div class="amount_box">
+
+                                <a href="javascript:;" class="reduce reSty">-</a>
+                                <input type="text" value="@num" class="sum">
+                                <a href="javascript:;" class="plus">+</a>
+                            </div>
+                        </li>
+                        <li class="list_sum">
+                            @{
+                    double? sum = co.GIPrice * num * ZheKou;
+                            }
+                            <p class="sum_price">￥@sum</p>
+                        </li>
+                        <li class="list_op">
+                            <p class="del"><a href="javascript:;" class="delBtn">移除商品</a></p>
+                        </li>
+                    </ul>
+
+                </div>
+
+                  
+                }
+            }
+        </div>
+            
+        }
+
+    }
+    else
+    {
+        <span style="text-align: center; color: red; font-size: 20px;">您还没有添加商品到购物车</span>
+    }
+
+    <!--底部-->
+    <div class="bar-wrapper">
+        <div class="bar-right">
+            <div class="piece">已选商品<strong class="piece_num">0</strong>件</div>
+            <div class="totalMoney">共计: <strong class="total_text">0.00</strong></div>
+            <div class="calBtn"><a href="javascript:;">结算</a></div>
+        </div>
+    </div>
+</section>
+<section class="model_bg"></section>
+<section class="my_model">
+    <p class="title">删除宝贝<span class="closeModel">X</span></p>
+    <p>您确认要删除该宝贝吗？</p>
+    <div class="opBtn"><a href="javascript:;" class="dialog-sure">确定</a><a href="javascript:;" class="dialog-close">关闭</a></div>
+</section>
+
+
+<script src="~/js/jquery-1.9.1.min.js"></script>
+<script src="~/js/Cart/carts.js"></script>

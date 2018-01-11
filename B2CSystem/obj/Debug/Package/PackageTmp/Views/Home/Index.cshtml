@@ -1,0 +1,1023 @@
+﻿@{
+    ViewBag.Title = "Index";
+
+    Layout = "/Views/Home_Layout.cshtml";
+}
+
+@using B2CSystem.Models
+<script src="~/js/jquery-1.9.1.min.js"></script>
+<script src="~/js/layer/layer.js"></script>
+<link rel="stylesheet" type="text/css" href="css/index.css">
+
+<script src="~/js/base.js"></script>
+
+<script src="js/jquery.fly.min.js"></script>
+<!--导航-->
+
+<script>
+    $(function () {
+        $(".ShouCang").click(function () {
+            //得到要收藏的商品编号
+            var id = $(this).parent().attr("text").valueOf();
+            //记录点击的那个标签
+            var a = this;
+            $.post("/ShouCang/AddShouCang", { goodsId: id }, function (res) {
+                if (res == "WeiDL") {
+                    layer.open({
+                        title: "温馨提示",
+                        content: "您还没有登录，请先登录!",
+                        btn: ["确定"],
+                        btn1: function () {
+                            location.href = "/LoginAndRegister/Login?func=shoucang&goodsid=" + id;
+                        }
+                    })
+                } else if (res == "yes") {
+                    //layer.open({
+                    //    title: "温馨提示",
+                    //    content: "收藏成功!",
+                    //    btn: ["确定"],
+                    //    btn1: function () {
+                    //        layer.closeAll();
+                    //    }
+                    //})
+
+                    //把当前点击的<a>收藏<a/>改为<a>已收藏</a>
+                    $(a).parent().html("<a style='font-size: 12px;'>已收藏</a><a href='javascript:void(0)' class='add_scar'>加入购物车</a>");
+
+                }
+            })
+        })
+
+        //加入购物车操作
+        $(".add_scar").click(function () {
+
+            alert("add_scar");
+
+            //得到要加入的商品编号
+            var goodsid = $(this).parent().attr("text").valueOf();
+            @*//得到当前登陆的用户信息
+            @{UserInfo user = Session["user"] as UserInfo; }
+            //如果当前没有用户登录 那么就提示先去登录
+            if ("@user" == null || "@user" == "") {
+
+                layer.open({
+                    title: "温馨提示",
+                    content: "您还没有登陆，请先登录...",
+                    btn: ["确定"],
+                    btn1: function () {
+                        location.href = "/LoginAndRegister/Login?func=add_car&goodsid=" + goodsid;
+                    }
+                })
+                alert("11");
+                //return false;
+            } else {*@
+
+            $.post("/Cart/Add_Car", { goodsid: goodsid }, function (res) {
+                if (parseInt(res) > 0) {
+
+                    alert("ok");
+
+                    //说明添加成功 修改购物车商品的数量 重新查询一次
+                    $.post("/Cart/getCarCount", function (result) {
+
+                        $(".num").html(result);
+                    })
+
+
+                } else if (parseInt(res) == -1) {
+                    alert("-1");
+
+                    layer.open({
+                        title: "温馨提示",
+                        content: "您还没有登陆，请先登录...",
+                        btn: ["确定"],
+                        btn1: function () {
+                            location.href = "/LoginAndRegister/Login?func=add_car&goodsid=" + goodsid;
+                        }
+                    })
+                
+                } else {
+                    alert("33");
+                    layer.open({
+                        title: "温馨提示",
+                        content: "添加失败!",
+                        btn: ["确定"],
+                        btn1: function () {
+                            layer.closeAll();
+                        }
+                    })
+                }
+            })
+            //}
+        })
+
+    })
+
+
+</script>
+@section topSection{
+    <div class="maxbj"></div>
+
+}
+<!--最大的背景-->
+<section class="dao_hang">
+    <nav>
+        @*    	<!--右下侧广告-->
+        <div class="advertisement">
+        	<h4>最新公告</h4>
+            <div class="notice_new">
+            	<p><a href="#">【优选】金秋聚会，买一送一</a></p>
+                <p><a href="#">【优选】中秋嘉年华，好礼钜惠</a></p>
+                <p><a href="#">【优选】冰点破纪录，低价不猫腻</a></p>
+                <p><a href="#">【优选】开学季，“纸”想“净、净”学习</a></p>
+                <p><a href="#">【优选】金秋聚会，买一送一</a></p>
+                <p><a href="#">【优选】中秋嘉年华，好礼钜惠</a></p>
+                <p><a href="#">【优选】开学季，“纸”想“净、净”学习</a></p>
+            </div>
+            <a href="#">
+            	<div class="notice_img">
+            	    <img src="images/activity.jpg" class="img1">
+                    <img src="images/activity.jpg" class="img2">
+                </div>
+            </a>
+            <!--<script>
+			$(function(){
+				$(".notice_img")
+				})
+            </script>-->
+        </div>*@
+
+
+        <!--全部商品分类-->
+        <div class="important">
+            <img src="images/all_list.png" style="margin-top: 8px">&nbsp;全部商品分类
+        	<aside style="height: 80px; background-color: #fff">
+                <ul style="background-color: #fff">
+                    @{
+                        //得到所有商品类型与商品类型
+                        List<GoodType> typeList = ViewBag.typeList as List<GoodType>;
+                        List<GoodsInfo> goodsList = ViewBag.goodsList as List<GoodsInfo>;
+
+                        int iss = 0;
+                        //遍历所有商品类型
+                        foreach (var type in typeList)
+                        {
+                            iss++;
+                        <li class="cates" mt-ct="list0 @iss">
+                            @{
+                            B2CSystemEntities1 bs = new B2CSystemEntities1();
+                            //得到所有手机热销品牌
+                            List<IGrouping<string, DataList>> dList = bs.DataList.Where(a => a.GoodsType_id == 1 && a.IsHot == 1).GroupBy(a => a.GIName).Take(5).ToList();
+                            //得到所有电脑热销品牌
+                            List<IGrouping<string, DataList>> nList = bs.DataList.Where(a => a.GoodsType_id == 2 && a.IsHot == 1).GroupBy(a => a.GIName).Take(5).ToList();
+                            //得到所有手表热销品牌
+                            List<IGrouping<string, DataList>> sbList = bs.DataList.Where(a => a.GoodsType_id == 3 && a.IsHot == 1).GroupBy(a => a.GIName).Take(5).ToList();
+                           
+                            }
+                            <h3>@type.GTName</h3>
+                            @if (iss == 1)
+                            {
+                                <p>
+                                    @for (int i = 0; i < dList.Count; i++)
+                                    {
+                                        <a href="#">@dList[i].Key</a>
+                                    }
+
+                                    <i style="font-family: '宋体'; color: #666; line-height: 23px; font-size: 14px; float: left">></i>
+                                </p>
+                            }
+                            else if (iss == 2)
+                            {
+                                <p>
+                                    @for (int i = 0; i < nList.Count; i++)
+                                    {
+                                        <a href="#">@nList[i].Key</a>
+                                    }
+
+                                    <i style="font-family: '宋体'; color: #666; line-height: 23px; font-size: 14px; float: left">></i>
+                                </p>
+                            }
+                            else if (iss == 3)
+                            {
+                                <p>
+                                    @for (int i = 0; i < sbList.Count; i++)
+                                    {
+                                        <a href="#">@sbList[i].Key</a>
+                                    }
+
+                                    <i style="font-family: '宋体'; color: #666; line-height: 23px; font-size: 14px; float: left">></i>
+                                </p>
+                            }
+
+                        </li>
+                         
+                        }
+                    }
+
+
+
+
+                </ul>
+            </aside>
+
+
+            <div>
+                @* @{
+                    B2CSystemEntities1 b = new B2CSystemEntities1();
+                    //得到所有热销品牌
+                    List<IGrouping<string, DataList>> dList = b.DataList.Where(a => a.GoodsType_id == 1 && a.IsHot == 1).GroupBy(a => a.GIName).ToList();
+                    foreach (var item in dList)
+                    {
+                    <div class="import_list b-list0 1">
+                        <dt>热销手机品牌：</dt>
+                        <dd>
+                            <a href="#">@item.Key</a>
+                        </dd>
+                    </div>
+                    }
+                    
+                }*@
+
+                <div class="import_list b-list02">
+                    <dt>与内容无关：</dt>
+                    <dd>
+                        <a href="#">T恤</a>
+                        <a href="#">休闲裤</a>
+
+                    </dd>
+                </div>
+                <div class="import_list b-list03">
+                    <dt>与内容无关：</dt>
+                    <dd>
+                        <a href="#">T恤</a>
+                        <a href="#">休闲裤</a>
+                        <a href="#">条纹T</a>
+                        <a href="#">牛仔裤</a>
+
+                    </dd>
+                </div>
+
+            </div>
+        </div>
+        <!--结束-->
+        <div class="dao_list">
+            <a href="#">首页</a>
+            @{
+                //得到前6个商铺 storeList
+                List<StoreInfo> storeList = ViewBag.storeList as List<StoreInfo>;
+                foreach (var item in storeList)
+                {
+                <a href="#">@item.SName</a>
+                }
+           
+            }
+        </div>
+
+    </nav>
+</section>
+<!--banner-->
+<div id="banner_tabs" class="flexslider">
+    <ul class="slides">
+        <li>
+            <a title="" target="_blank" href="/XiangXi/XiangXi?sp_id=13">
+                <img width="1920" height="500" alt="" style="background: url(/IMG/IndexIMG/index_1.jpg) no-repeat center;" src="images/alpha.png">
+            </a>
+        </li>
+        <li>
+            <a title="" href="/XiangXi/XiangXi?sp_id=6">
+                <img width="1920" height="500" alt="" style="background: url(/IMG/IndexIMG/index_2.jpg) no-repeat center;" src="images/alpha.png">
+            </a>
+        </li>
+        <li>
+            <a title="" href="/XiangXi/XiangXi?sp_id=8">
+                <img width="1920" height="500" alt="" style="background: url(/IMG/IndexIMG/index_3.jpg) no-repeat center;" src="images/alpha.png">
+            </a>
+        </li>
+        <li>
+            <a title="" href="/XiangXi/XiangXi?sp_id=14">
+                <img width="1920" height="500" alt="" style="background: url(/IMG/IndexIMG/index_4.jpg) no-repeat center;" src="images/alpha.png">
+            </a>
+        </li>
+    </ul>
+    <ul class="flex-direction-nav">
+        <li><a class="flex-prev" href="javascript:;">Previous</a></li>
+        <li><a class="flex-next" href="javascript:;">Next</a></li>
+    </ul>
+    <ol id="bannerCtrl" class="flex-control-nav flex-control-paging">
+        <li class="active"><a>1</a></li>
+        <li><a>2</a></li>
+        <li><a>2</a></li>
+        <li><a>2</a></li>
+    </ol>
+</div>
+<script src="js/slider.js"></script>
+<!--gong告-->
+<script type="text/javascript">
+    window.onload = function () {
+        $("top").animate({ 'margin-top': '0' }, 2000)
+        $(".advertisement").animate({ 'top': '30', 'opacity': '1' }, 200)
+        $(".flexslider").animate({ 'margin-top': '0' }, 200)
+        $("aside").animate({ 'top': '30', 'opacity': '1' }, 200)
+        $("top").animate({ 'margin-top': '-400' }, 1000)
+
+    }
+</script>
+<!--楼层分布图-->
+
+<div class="fixed_position">
+    <div class="fixed_position_1">
+        <ul>
+            <li>手机之家</li>
+            <li>电脑之家</li>
+            <li>生活必备</li>
+            <li>个性筛选</li>
+            <li>推荐商品</li>
+        </ul>
+    </div>
+</div>
+
+
+<!--母婴专区-->
+<span class="as blessing_package">
+    <a href="#" style="color: #000">
+        <h3 style="float: left">&nbsp;手机之家<img src="images/zd.png" style="display: block; float: left; margin-top: 5px"></h3>
+    </a>
+    <div class="detailed_navigation">
+        <ul>
+            <li class="dog d-2-lt01 yadi" dg-floor="2" dg-ct="lt01">热门机型</li>
+            <li class="dog d-2-lt02" dg-floor="2" dg-ct="lt02">销量优先</li>
+            <li class="dog d-2-lt03" dg-floor="2" dg-ct="lt03">新品发布</li>
+        </ul>
+    </div>
+</span>
+
+@*--===============-======================     热门机型          =====================================================*@
+<div>
+    <div class="currency f-2-lt01">
+        <ul>
+            @{
+                List<DataList> SJList = ViewBag.SJList as List<DataList>;
+            }
+            @foreach (var item in SJList)
+            {
+                <li>
+                    <a href="~/XiangXi/XiangXi?sp_id=@item.GoodsInfo_Id">
+                        @foreach (GoodsImgs GIItem in ViewBag.GI)
+                        {
+                            if (item.GoodsImgs_id == GIItem.GImgs_id)
+                            {
+                            <img src="@GIItem.GImgs_thumbone" style="margin: 0 auto; display: block; width: 220px; height: 220px">
+                        
+                            <light1>
+                            <img src="~/IMG/TouXiang/saoguang.png" /> 
+                </light1>
+                            <span>￥@item.GIPrice</span>
+                            <div>
+                                <a href="~/XiangXi/XiangXi?sp_id=@item.GoodsInfo_Id">
+                                    <p>@item.GIName @item.GIItem  @item.GICPU  @item.GINeiCun
+                                    </p>
+                                </a>
+                            </div>
+                            <em text="@item.GoodsInfo_Id">
+                                @{
+                                if (Session["user"] != null)
+                                {
+                                    List<int?> List = ViewBag.List;
+                                    if (List.Contains(item.GoodsInfo_Id))
+                                    {
+                                    <a style="font-size: 12px;">已收藏</a>
+                                    <a class="add_scar"@* href="javascript:void(0)"*@>加入购物车</a>
+                                    }
+                                    else
+                                    {
+                                    <a class="ShouCang">收藏</a>
+                                    <a class="add_scar"@* href="javascript:void(0)"*@>加入购物车</a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a class="ShouCang">收藏</a>
+                                    <a class="add_scar"@* href="javascript:void(0)"*@>加入购物车</a>
+                                }
+                                }
+
+                            </em>
+
+
+                            }
+
+                        }
+
+                    </a>
+                </li>
+            
+            }
+        </ul>
+    </div>
+    @*==============================      销量前十                ===============================================*@
+    <div class="currency f-2-lt02" style="display: none">
+        <ul>
+
+            @{
+                List<DataList> XXSJList = ViewBag.XXSJList as List<DataList>;
+            }
+            @foreach (var item in XXSJList)
+            {
+                <li>
+                    <a href="~/XiangXi/XiangXi?sp_id=@item.GoodsInfo_Id">
+                        @foreach (GoodsImgs GIItem in ViewBag.GI)
+                        {
+                            if (item.GoodsImgs_id == GIItem.GImgs_id)
+                            {
+                            <img src="@GIItem.GImgs_thumbone" style="margin: 0 auto; display: block; width: 220px; height: 220px">
+                        
+                            <light1>
+                            <img src="~/IMG/TouXiang/saoguang.png" /> 
+                </light1>
+                            <span>￥@item.GIPrice</span>
+                            <a href="~/XiangXi/XiangXi?sp_id=@item.GoodsInfo_Id">
+                                <p>@item.GIName @item.GIItem  @item.GICPU  @item.GINeiCun
+                                </p>
+                            </a>
+                            <em text="@item.GoodsInfo_Id">
+                                @{
+                                if (Session["user"] != null)
+                                {
+                                    List<int?> List = ViewBag.List;
+                                    if (List.Contains(item.GoodsInfo_Id))
+                                    {
+                                    <a style="font-size: 12px;">已收藏</a>
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                    }
+                                    else
+                                    {
+                                    <a class="ShouCang">收藏</a>
+                                
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a class="ShouCang">收藏</a>
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                }
+                                }
+
+                            </em>
+
+
+                            }
+
+                        }
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </div>
+    @* =========================================     新品发布            =============================================== *@
+    <div class="currency f-2-lt03" style="display: none">
+        <ul>
+            @{
+                List<DataList> XPSJList = ViewBag.XPSJList as List<DataList>;
+            }
+            @foreach (var item in XPSJList)
+            {
+                <li>
+                    <a href="~/XiangXi/XiangXi?sp_id=@item.GoodsInfo_Id">
+                        @foreach (GoodsImgs GIItem in ViewBag.GI)
+                        {
+                            if (item.GoodsImgs_id == GIItem.GImgs_id)
+                            {
+                            <img src="@GIItem.GImgs_thumbone" style="margin: 0 auto; display: block; width: 220px; height: 220px">
+                        
+                            <light1>
+                            <img src="~/IMG/TouXiang/saoguang.png" /> 
+                </light1>
+                            <span>￥@item.GIPrice</span>
+                            <div>
+                                <a href="~/XiangXi/XiangXi?sp_id=@item.GoodsInfo_Id">
+                                    <p>@item.GIName @item.GIItem  @item.GICPU  @item.GINeiCun
+                                    </p>
+                                </a>
+                            </div>
+                            <em text="@item.GoodsInfo_Id">
+                                @{
+                                if (Session["user"] != null)
+                                {
+                                    List<int?> List = ViewBag.List;
+                                    if (List.Contains(item.GoodsInfo_Id))
+                                    {
+                                    <a style="font-size: 12px;">已收藏</a>
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                    }
+                                    else
+                                    {
+                                    <a class="ShouCang">收藏</a>
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a class="ShouCang">收藏</a>
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                }
+                                }
+
+                            </em>
+
+
+                            }
+
+                        }
+
+                    </a>
+                </li>
+            
+            }
+        </ul>
+    </div>
+
+</div>
+<!--电脑之家-->
+<span class="as blessing_package">
+    <a href="#" style="color: #000">
+        <h3 style="float: left">&nbsp;电脑之家
+        <img src="images/zd.png" style="display: block; float: left; margin-top: 5px"></h3>
+    </a>
+    <div class="detailed_navigation">
+        <ul>
+            <li class="dog d-3-lt01 yadi" dg-floor="3" dg-ct="lt01">热门电脑</li>
+            <li class="dog d-3-lt02" dg-floor="3" dg-ct="lt02">销量优先</li>
+            <li class="dog d-3-lt03" dg-floor="3" dg-ct="lt03">新品发布</li>
+        </ul>
+    </div>
+</span>
+<div>
+    @* ======================================      热销电脑        ====================================== *@
+    <div class="currency f-3-lt01">
+        <ul>
+            @{
+                List<DataList> DNList = ViewBag.DNList as List<DataList>;
+            }
+            @foreach (var item in DNList)
+            {
+                    
+                <li>
+                    <a href="~/XiangXi/XiangXi?sp_id=@item.GoodsInfo_Id">
+                        @foreach (GoodsImgs GIItem in ViewBag.GI)
+                        {
+                            if (item.GoodsImgs_id == GIItem.GImgs_id)
+                            {
+                            <img src="@GIItem.GImgs_thumbone" style="margin: 0 auto; display: block; width: 220px; height: 220px">
+                            <light1>
+                            <img src="~/IMG/TouXiang/saoguang.png" />
+            </light1>
+                            <span>￥@item.GIPrice</span>
+                            <a href="~/XiangXi/XiangXi?sp_id=@item.GoodsInfo_Id">
+                                <p>@item.GIName @item.GIItem @item.GICPU @item.GINeiCun</p>
+                            </a>
+                            <em text="@item.GoodsInfo_Id">
+                                @{
+                                if (Session["user"] != null)
+                                {
+                                    List<int?> List = ViewBag.List;
+                                    if (List.Contains(item.GoodsInfo_Id))
+                                    {
+                                    <a style="font-size: 12px;">已收藏</a>
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                    }
+                                    else
+                                    {
+                                    <a class="ShouCang">收藏</a>
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a class="ShouCang">收藏</a>
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                }
+                                }
+                            </em>
+                 
+                            }
+                        }
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </div>
+    @* ======================================   销量前十电脑         ======================================================= *@
+    <div class="currency f-3-lt02" style="display: none">
+        <ul>
+            @{
+                List<DataList> XXDNList = ViewBag.XXDNList as List<DataList>;
+            }
+            @foreach (var item in XXDNList)
+            {
+                    
+                <li>
+
+                    <a href="~/XiangXi/XiangXi?sp_id=@item.GoodsInfo_Id">
+                        @foreach (GoodsImgs GIItem in ViewBag.GI)
+                        {
+                            if (item.GoodsImgs_id == GIItem.GImgs_id)
+                            {
+                            <img src="@GIItem.GImgs_thumbone" style="margin: 0 auto; display: block; width: 220px; height: 220px">
+                            <light1>
+                            <img src="~/IMG/TouXiang/saoguang.png" />
+            </light1>
+                            <span>￥@item.GIPrice</span>
+                            
+                            <a href="~/XiangXi/XiangXi?sp_id=@item.GoodsInfo_Id">
+                                <p>@item.GIName @item.GIItem @item.GICPU @item.GINeiCun</p>
+                            </a>
+                            <em text="@item.GoodsInfo_Id">
+                                @{
+                                if (Session["user"] != null)
+                                {
+                                    List<int?> List = ViewBag.List;
+                                    if (List.Contains(item.GoodsInfo_Id))
+                                    {
+                                    <a style="font-size: 12px;">已收藏</a>
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                    }
+                                    else
+                                    {
+                                    <a class="ShouCang">收藏</a>
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a class="ShouCang">收藏</a>
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                }
+                                }
+                            </em>
+                 
+                            }
+                        }
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </div>
+    @* ===========================================       新品电脑                 =================================================== *@
+    <div class="currency f-3-lt03" style="display: none">
+        <ul>
+            @{
+                List<DataList> XPDNList = ViewBag.XPDNList as List<DataList>;
+            }
+            @foreach (var item in XPDNList)
+            {
+                    
+                <li>
+
+                    <a href="~/XiangXi/XiangXi?sp_id=@item.GoodsInfo_Id">
+                        @foreach (GoodsImgs GIItem in ViewBag.GI)
+                        {
+                            if (item.GoodsImgs_id == GIItem.GImgs_id)
+                            {
+                            <img src="@GIItem.GImgs_thumbone" style="margin: 0 auto; display: block; width: 220px; height: 220px">
+                            <light1>
+                            <img src="~/IMG/TouXiang/saoguang.png" />
+            </light1>
+                            <span>￥@item.GIPrice</span>
+                            
+                            <a href="~/XiangXi/XiangXi?sp_id=@item.GoodsInfo_Id">
+                                <p>@item.GIName @item.GIItem @item.GICPU @item.GINeiCun</p>
+                            </a>
+                            <em text="@item.GoodsInfo_Id">
+                                @{
+                                if (Session["user"] != null)
+                                {
+                                    List<int?> List = ViewBag.List;
+                                    if (List.Contains(item.GoodsInfo_Id))
+                                    {
+                                    <a style="font-size: 12px;">已收藏</a>
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                    }
+                                    else
+                                    {
+                                    <a class="ShouCang">收藏</a>
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a class="ShouCang">收藏</a>
+                                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                                }
+                                }
+                            </em>
+                 
+                            }
+                        }
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </div>
+
+</div>
+<!--生活必备-->
+<span class="as blessing_package">
+    <a href="#" style="color: #000">
+        <h3 style="float: left">&nbsp;生活必备<img src="images/zd.png" style="display: block; float: left; margin-top: 5px"></h3>
+    </a>
+    <div class="detailed_navigation">
+        <ul>
+            <li class="dog d-4-lt01 yadi" dg-floor="4" dg-ct="lt01">收纳用品</li>
+            <li class="dog d-4-lt02" dg-floor="4" dg-ct="lt02">雨伞雨具</li>
+            <li class="dog d-4-lt03" dg-floor="4" dg-ct="lt03">净化除味</li>
+            <li class="dog d-4-lt04" dg-floor="4" dg-ct="lt04">浴室用品</li>
+            <li class="dog d-4-lt04" dg-floor="4" dg-ct="lt05">洗晒/熨烫</li>
+            <li class="dog d-4-lt04" dg-floor="4" dg-ct="lt06">缝纫/针织用品</li>
+            <li class="dog d-4-lt04" dg-floor="4" dg-ct="lt07">清洁工具</li>
+        </ul>
+    </div>
+</span>
+<div>
+    <div class="currency f-4-lt01">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="images/57417377N429e10fc.jpg" style="margin: 0 auto; display: block; width: 220px; height: 220px"></a>
+                <light1>
+            	<img src="images/saoguang.png">
+            </light1>
+                <span>￥59</span>
+                <a href="#">
+                    <p>罗技 G402 有线光电发光游戏鼠标宏笔记本电脑电竞CF专用LOL </p>
+                </a>
+                <em>
+                    <a href="#">收藏</a>
+                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                </em>
+            </li>
+
+        </ul>
+    </div>
+    <div class="currency f-4-lt02" style="display: none">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="images/56f74e97Na5dee145.jpg" style="margin: 0 auto; display: block; width: 220px; height: 220px"></a>
+                <light1>
+            	<img src="images/saoguang.png">
+            </light1>
+                <span>￥59</span>
+                <a href="#">
+                    <p>罗技 G402 有线光电发光游戏鼠标宏笔记本电脑电竞CF专用LOL </p>
+                </a>
+                <em>
+                    <a href="#">收藏</a>
+                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                </em>
+            </li>
+
+        </ul>
+    </div>
+    <div class="currency f-4-lt03" style="display: none">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="images/56f0d58bN4871ee89.jpg" style="margin: 0 auto; display: block; width: 220px; height: 220px"></a>
+                <light1>
+            	<img src="images/saoguang.png">
+            </light1>
+                <span>￥59</span>
+                <a href="#">
+                    <p>罗技 G402 有线光电发光游戏鼠标宏笔记本电脑电竞CF专用LOL </p>
+                </a>
+                <em>
+                    <a href="#">收藏</a>
+                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                </em>
+            </li>
+
+        </ul>
+    </div>
+    <div class="currency f-4-lt04" style="display: none">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="images/54c9f2a3N59b95f29.jpg" style="margin: 0 auto; display: block; width: 220px; height: 220px"></a>
+                <light1>
+            	<img src="images/saoguang.png">
+            </light1>
+                <span>￥59</span>
+                <a href="#">
+                    <p>罗技 G402 有线光电发光游戏鼠标宏笔记本电脑电竞CF专用LOL </p>
+                </a>
+                <em>
+                    <a href="#">收藏</a>
+                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                </em>
+            </li>
+
+        </ul>
+    </div>
+    <div class="currency f-4-lt05" style="display: none">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="images/56892577Nb9cb53be.jpg" style="margin: 0 auto; display: block; width: 220px; height: 220px"></a>
+                <light1>
+            	<img src="images/saoguang.png">
+            </light1>
+                <span>￥59</span>
+                <a href="#">
+                    <p>罗技 G402 有线光电发光游戏鼠标宏笔记本电脑电竞CF专用LOL </p>
+                </a>
+                <em>
+                    <a href="#">收藏</a>
+                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                </em>
+            </li>
+
+        </ul>
+    </div>
+    <div class="currency f-4-lt06" style="display: none">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="images/rBEIC0_gRMoIAAAAAACg0Wi1QEwAAAykgFTBlIAAKDp775.jpg" style="margin: 0 auto; display: block; width: 220px; height: 220px"></a>
+                <light1>
+            	<img src="images/saoguang.png">
+            </light1>
+                <span>￥59</span>
+                <a href="#">
+                    <p>罗技 G402 有线光电发光游戏鼠标宏笔记本电脑电竞CF专用LOL </p>
+                </a>
+                <em>
+                    <a href="#">收藏</a>
+                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                </em>
+            </li>
+
+        </ul>
+    </div>
+    <div class="currency f-4-lt07" style="display: none">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="images/57ac4b58N1aa51ca8.jpg" style="margin: 0 auto; display: block; width: 220px; height: 220px"></a>
+                <light1>
+            	<img src="images/saoguang.png">
+            </light1>
+                <span>￥59</span>
+                <a href="#">
+                    <p>罗技 G402 有线光电发光游戏鼠标宏笔记本电脑电竞CF专用LOL </p>
+                </a>
+                <em>
+                    <a href="#">收藏</a>
+                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                </em>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<!--个性筛选-->
+<span class="as blessing_package">
+    <a href="#" style="color: #000">
+        <h3 style="float: left">&nbsp;个性筛选<img src="images/zd.png" style="display: block; float: left; margin-top: 5px"></h3>
+    </a>
+    <div class="detailed_navigation">
+        <ul>
+            <li class="dog d-5-lt01 yadi" dg-floor="5" dg-ct="lt01">一人空间</li>
+            <li class="dog d-5-lt02" dg-floor="5" dg-ct="lt02">二人世界</li>
+            <li class="dog d-5-lt03" dg-floor="5" dg-ct="lt03">三口之家</li>
+            <li class="dog d-5-lt04" dg-floor="5" dg-ct="lt04">四人之家</li>
+            <li class="dog d-5-lt04" dg-floor="5" dg-ct="lt05">五口大家</li>
+        </ul>
+    </div>
+</span>
+<div>
+    <div class="currency f-5-lt01">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="images/578f96e3Ne953ac32.jpg" style="margin: 0 auto; display: block; width: 220px; height: 220px"></a>
+                <light1>
+            	<img src="images/saoguang.png">
+            </light1>
+                <span>￥59</span>
+                <a href="#">
+                    <p>罗技 G402 有线光电发光游戏鼠标宏笔记本电脑电竞CF专用LOL </p>
+                </a>
+                <em>
+                    <a href="#">收藏</a>
+                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                </em>
+            </li>
+
+        </ul>
+    </div>
+    <div class="currency f-5-lt02" style="display: none">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="images/rBEhU1Kvv8gIAAAAAAcDR5hr6hkAAG4SwPB6yAABwNf577.jpg" style="margin: 0 auto; display: block; width: 220px; height: 220px"></a>
+                <light1>
+            	<img src="images/saoguang.png">
+            </light1>
+                <span>￥59</span>
+                <a href="#">
+                    <p>罗技 G402 有线光电发光游戏鼠标宏笔记本电脑电竞CF专用LOL </p>
+                </a>
+                <em>
+                    <a href="#">收藏</a>
+                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                </em>
+            </li>
+
+        </ul>
+    </div>
+    <div class="currency f-5-lt03" style="display: none">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="images/5688f53dN144e3333.jpg" style="margin: 0 auto; display: block; width: 220px; height: 220px"></a>
+                <light1>
+            	<img src="images/saoguang.png">
+            </light1>
+                <span>￥59</span>
+                <a href="#">
+                    <p>罗技 G402 有线光电发光游戏鼠标宏笔记本电脑电竞CF专用LOL </p>
+                </a>
+                <em>
+                    <a href="#">收藏</a>
+                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                </em>
+            </li>
+
+        </ul>
+    </div>
+    <div class="currency f-5-lt04" style="display: none">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="images/56e3bdf0N6b0aa4a7.jpg" style="margin: 0 auto; display: block; width: 220px; height: 220px"></a>
+                <light1>
+            	<img src="images/saoguang.png">
+            </light1>
+                <span>￥59</span>
+                <a href="#">
+                    <p>罗技 G402 有线光电发光游戏鼠标宏笔记本电脑电竞CF专用LOL </p>
+                </a>
+                <em>
+                    <a href="#">收藏</a>
+                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                </em>
+            </li>
+
+        </ul>
+    </div>
+    <div class="currency f-5-lt05" style="display: none">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="images/577f624eN2e3465e5.jpg" style="margin: 0 auto; display: block; width: 220px; height: 220px"></a>
+                <light1>
+            	<img src="images/saoguang.png">
+            </light1>
+                <span>￥59</span>
+                <a href="#">
+                    <p>罗技 G402 有线光电发光游戏鼠标宏笔记本电脑电竞CF专用LOL </p>
+                </a>
+                <em>
+                    <a href="#">收藏</a>
+                    <a href="javascript:void(0)" class="add_scar">加入购物车</a>
+                </em>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<!--猜你喜欢-->
+<div class="as kongzhianniu">
+    <div class="lunbobanner">
+        <ul class="lunboimg">
+            <li>
+                <a href="#">
+                    <b>
+                        <img src="images/577f624eN2e3465e5.jpg" style="margin: 0 auto; display: block; width: 220px; height: 220px"></b>
+                    <span>￥59</span>
+                    <p>罗技 G402 有线光电发光游戏鼠标宏笔记本电脑电竞CF专用LOL </p>
+                </a>
+
+            </li>
+
+        </ul>
+    </div>
+    <div class="btnl"><</div>
+    <div class="btnr">></div>
+    <h4 class="guanfangremai">推荐商品</h4>
+</div>

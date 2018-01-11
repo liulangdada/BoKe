@@ -1,0 +1,848 @@
+﻿@{
+    ViewBag.Title = "order";
+    Layout = "/Views/GeRenZhongXing/gerenzhongxing_Layout.cshtml";
+}
+
+@*<link href="~/css/GenRenZhongXing/admin.css" rel="stylesheet" type="text/css" />
+<link href="~/css/GenRenZhongXing/amazeui.css" rel="stylesheet" type="text/css" />
+<link href="~/css/GenRenZhongXing/personal.css" rel="stylesheet" type="text/css" />*@
+<link href="~/css/GenRenZhongXing/orstyle.css" rel="stylesheet" />
+
+<script src="~/js/GenRenZhongXing/jquery.min.js"></script>
+
+<script src="~/js/GenRenZhongXing/amazeui.js"></script>
+
+<script src="~/js/layer/mobile/layer.js"></script>
+
+<script>
+
+    $(function () {
+        var queren = function (item, OrderInfo_Id, url, OrderState1) {
+
+            $.post("/GeRenZhongXing/" + url, { OrderInfo_Id: OrderInfo_Id, OrderState: OrderState1 }, function (row) {
+                if (item == "提醒发货") {
+                    if (row > 0) {
+                        layer.open({
+                            title: "温馨提示",
+                            content: "我们将尽快的联系物流<br/> 给你优先发送",
+                            area: ["100", "200"],
+                            btn: ["确定"],
+                            btn1: function () {
+                                layer.close();
+
+                            }
+                        })
+                       
+                    } else {
+                        layer.open({
+                            title: "温馨提示",
+                            content: "操作失败",
+                            area: ["100", "200"],
+                            btn: ["确定"],
+                            btn1: function () {
+
+                                layer.close();
+                            }
+                        })
+                    }
+                } else {
+                    if (row > 0) {
+                        location.href = "/GeRenZhongXing/order";
+                       
+                     
+                    } else {
+                        layer.open({
+                            title: "温馨提示",
+                            content: "操作失败",
+                            area: ["100", "200"],
+                            btn: ["确定"],
+                            btn1: function () {
+                                layer.close();
+                            }
+                        })
+                    }
+                }
+
+            });
+        }
+
+
+
+        $(".anniu").click(function () {
+            //alert("11");
+            //得到里面的值  判断是什么
+            var item = $(this).html().trim();
+
+            //得到我们的订单编号
+            var OrderInfo_Id = $(this).parent().find(".dingdan_id").html();
+
+            //console.log(OrderInfo_Id);
+            var OrderState = 0;
+            var url = "";
+            if (item == "确认收货") {
+                url = "OrderStates";
+                OrderState = 1;
+                queren(item, OrderInfo_Id, url, OrderState);
+            }
+            if (item == "删除订单") {
+                url = "OrderStatedelete";
+                queren(item, OrderInfo_Id, url, OrderState);
+            }
+            if (item == "提醒发货") {
+                OrderState = -3;
+                url = "OrderStates";
+                queren(item, OrderInfo_Id, url, OrderState);
+            }
+
+        });
+
+
+
+    });
+
+
+</script>
+
+
+<body>
+    <div class="center">
+        <div class="col-main">
+            <div class="main-wrap">
+
+                <div class="user-order">
+
+                    <!--标题 -->
+                    <div class="am-cf am-padding">
+                        <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">订单管理</strong> / <small>Order</small></div>
+                    </div>
+                    <hr />
+
+                    <div class="am-tabs am-tabs-d2 am-margin" data-am-tabs>
+
+                        <ul class="am-avg-sm-5 am-tabs-nav am-nav am-nav-tabs">
+                            <li class="am-active"><a href="#tab1">所有订单</a></li>
+
+                            <li><a href="#tab3">待发货</a></li>
+                            <li><a href="#tab4">待收货</a></li>
+                            <li><a href="#tab5">待评价</a></li>
+                        </ul>
+                        @using B2CSystem.DTO_models
+                        @{
+                            //全部的购买商品
+                            List<DTOgoods_orderinfo> dto_list = ViewBag.dto_list as List<DTOgoods_orderinfo>;
+
+                            //没签收的
+                            List<DTOgoods_orderinfo> dto_unyiqianhuo_list = ViewBag.dto_unyiqianhuo_list as List<DTOgoods_orderinfo>;
+
+                            //退货
+                            List<DTOgoods_orderinfo> dto_shibai_list = ViewBag.dto_shibai_list as List<DTOgoods_orderinfo>;
+
+                            //已发货
+                            List<DTOgoods_orderinfo> dto_yifahuo_list = ViewBag.dto_yifahuo_list as List<DTOgoods_orderinfo>;
+                            //待发货
+                            List<DTOgoods_orderinfo> dto_daifahuo_list = ViewBag.dto_daifahuo_list as List<DTOgoods_orderinfo>;
+                            //已签收  待评价
+                            List<DTOgoods_orderinfo> dto_yiqianhuo_list = ViewBag.dto_yiqianhuo_list as List<DTOgoods_orderinfo>;
+
+                        }
+                        <div class="am-tabs-bd">
+                            <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+                                <div class="order-top">
+                                    <div class="th th-item">
+                                        <td class="td-inner">商品</td>
+                                    </div>
+                                    <div class="th th-price">
+                                        <td class="td-inner">单价</td>
+                                    </div>
+                                    <div class="th th-number">
+                                        <td class="td-inner">数量</td>
+                                    </div>
+                                    <div class="th th-operation">
+                                        <td class="td-inner">商品操作</td>
+                                    </div>
+                                    <div class="th th-amount">
+                                        <td class="td-inner">合计</td>
+                                    </div>
+                                    <div class="th th-status">
+                                        <td class="td-inner">交易状态</td>
+                                    </div>
+                                    <div class="th th-change">
+                                        <td class="td-inner">交易操作</td>
+                                    </div>
+                                </div>
+
+                                <div class="order-main">
+                                    <div class="order-list">
+
+                                        <!--交易成功-->
+                                        @foreach (DTOgoods_orderinfo item in dto_yiqianhuo_list)
+                                        {
+                                            <div class="order-status5">
+                                                <div class="order-title">
+                                                    <div class="dd-num">订单编号：<a href="javascript:;">@item.OrderInfo_Id</a></div>
+                                                    <span>成交时间：@item.OrderInfo_time</span>
+                                                    <!--    <em>店铺：小桔灯</em>-->
+                                                </div>
+                                                <div class="order-content">
+                                                    <div class="order-left">
+                                                        <ul class="item-list">
+                                                            <li class="td td-item">
+                                                                <div class="item-pic">
+                                                                    <a href="~/XiangXi/XiangXi?sp_id=@item.sp_id" class="J_MakePoint">
+                                                                        <img src="@item.sp_imgs" class="itempic J_ItemImg">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="item-info">
+                                                                    <div class="item-basic-info">
+                                                                        <a href="~/XiangXi/XiangXi?sp_id=@item.sp_id">
+                                                                            <p>@item.sp_name</p>
+                                                                            <p class="info-little">
+                                                                                内存：@item.neicun
+                                                                                <br />
+                                                                                分辨率：@item.fenbianlv
+                                                                            </p>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-price">
+                                                                <div class="item-price">
+                                                                    @item.price
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-number">
+                                                                <div class="item-number">
+                                                                    <span>×</span>@item.sp_num
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-operation">
+                                                                <div class="item-operation">
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                    <div class="order-right">
+                                                        <li class="td td-amount">
+                                                            <div class="item-amount">
+                                                                合计：@{
+                                            double? sum = @item.price * @item.sp_num;
+                                                                }
+                                                                @sum
+                                                                <p>含运费：<span>0</span></p>
+                                                            </div>
+                                                        </li>
+                                                        <div class="move-right">
+                                                            <li class="td td-status">
+                                                                <div class="item-status">
+                                                                    <p class="Mystatus">交易成功</p>
+                                                                    <p class="order-info"><a href="orderinfo.html">订单详情</a></p>
+                                                                    <p class="order-info"><a href="logistics.html">查看物流</a></p>
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-change">
+                                                                <span class="dingdan_id" style="display: none">@item.OrderInfo_Id</span>
+                                                                <div class="am-btn am-btn-danger anniu">
+                                                                    删除订单
+                                                                </div>
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+
+                                        <!--交易失败-->
+                                        @foreach (DTOgoods_orderinfo item in dto_shibai_list)
+                                        {
+                                            <div class="order-status0">
+                                                <div class="order-title">
+                                                    <div class="dd-num">订单编号：<a href="javascript:;">@item.OrderInfo_Id</a></div>
+                                                    <span>成交时间：@item.OrderInfo_time</span>
+                                                    <!--    <em>店铺：小桔灯</em>-->
+                                                </div>
+                                                <div class="order-content">
+                                                    <div class="order-left">
+                                                        <ul class="item-list">
+                                                            <li class="td td-item">
+                                                                <div class="item-pic">
+                                                                    <a href="~/XiangXi/XiangXi?sp_id=@item.sp_id" class="J_MakePoint">
+                                                                        <img src="@item.sp_imgs" class="itempic J_ItemImg">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="item-info">
+                                                                    <div class="item-basic-info">
+                                                                        <a href="~/XiangXi/XiangXi?sp_id=@item.sp_id">
+                                                                            <p>@item.sp_name</p>
+                                                                            <p class="info-little">
+                                                                                内存：@item.neicun
+                                                                                <br />
+                                                                                分辨率：@item.fenbianlv
+                                                                            </p>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-price">
+                                                                <div class="item-price">
+                                                                    @item.price
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-number">
+                                                                <div class="item-number">
+                                                                    <span>×</span>@item.sp_num
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-operation">
+                                                                <div class="item-operation">
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                    <div class="order-right">
+                                                        <li class="td td-amount">
+                                                            <div class="item-amount">
+                                                                合计：@{
+                                            double? sum = @item.price * @item.sp_num;
+                                                                }
+                                                                @sum
+                                                                <p>含运费：<span>10.00</span></p>
+                                                            </div>
+                                                        </li>
+                                                        <div class="move-right">
+                                                            <li class="td td-status">
+                                                                <div class="item-status">
+                                                                    <p class="Mystatus">交易关闭</p>
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-change">
+                                                                <span class="dingdan_id" style="display: none">@item.OrderInfo_Id</span>
+                                                                <div class="am-btn am-btn-danger anniu">
+                                                                    删除订单
+                                                                </div>
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        <!--待发货-->
+                                        @foreach (DTOgoods_orderinfo item in dto_daifahuo_list)
+                                        {
+                                            <div class="order-status2">
+                                                <div class="order-title">
+                                                    <div class="dd-num">订单编号：<a href="javascript:;">@item.OrderInfo_Id</a></div>
+                                                    <span>成交时间：@item.OrderInfo_time</span>
+                                                    <!--    <em>店铺：小桔灯</em>-->
+                                                </div>
+                                                <div class="order-content">
+                                                    <div class="order-left">
+                                                        <ul class="item-list">
+                                                            <li class="td td-item">
+                                                                <div class="item-pic">
+                                                                    <a href="~/XiangXi/XiangXi?sp_id=@item.sp_id" class="J_MakePoint">
+                                                                        <img src="@item.sp_imgs" class="itempic J_ItemImg">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="item-info">
+                                                                    <div class="item-basic-info">
+                                                                        <a href="~/XiangXi/XiangXi?sp_id=@item.sp_id">
+                                                                            <p>@item.sp_name</p>
+                                                                            <p class="info-little">
+                                                                                内存：@item.neicun
+                                                                                <br />
+                                                                                分辨率：@item.fenbianlv
+                                                                            </p>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-price">
+                                                                <div class="item-price">
+                                                                    @item.price
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-number">
+                                                                <div class="item-number">
+                                                                    <span>×</span>@item.sp_num
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-operation">
+                                                                <div class="item-operation">
+                                                                    <a href="refund.html">退款</a>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                    <div class="order-right">
+                                                        <li class="td td-amount">
+                                                            <div class="item-amount">
+                                                                合计：@{
+                                            double? sum = @item.price * @item.sp_num;
+                                                                }
+                                                                @sum
+                                                                <p>含运费：<span>0</span></p>
+                                                            </div>
+                                                        </li>
+                                                        <div class="move-right">
+                                                            <li class="td td-status">
+                                                                <div class="item-status">
+                                                                    <p class="Mystatus">买家已付款</p>
+                                                                    <p class="order-info"><a href="orderinfo.html">订单详情</a></p>
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-change">
+                                                                <span class="dingdan_id" style="display: none">@item.OrderInfo_Id</span>
+                                                                <div class="am-btn am-btn-danger anniu">
+                                                                    提醒发货
+                                                                </div>
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                        <!--不同状态订单-->
+                                        <!--已发货-->
+                                        @foreach (DTOgoods_orderinfo item in dto_yifahuo_list)
+                                        {
+                                            <div class="order-status3">
+                                                <div class="order-title">
+                                                    <div class="dd-num">订单编号：<a href="javascript:;">@item.OrderInfo_Id</a></div>
+                                                    <span>成交时间：@item.OrderInfo_time</span>
+                                                    <!--    <em>店铺：小桔灯</em>-->
+                                                </div>
+                                                <div class="order-content">
+                                                    <div class="order-left">
+                                                        <ul class="item-list">
+                                                            <li class="td td-item">
+                                                                <div class="item-pic">
+                                                                    <a href="~/XiangXi/XiangXi?sp_id=@item.sp_id" class="J_MakePoint">
+                                                                        <img src="@item.sp_imgs" class="itempic J_ItemImg">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="item-info">
+                                                                    <div class="item-basic-info">
+                                                                        <a href="~/XiangXi/XiangXi?sp_id=@item.sp_id">
+                                                                            <p>@item.sp_name</p>
+                                                                            <p class="info-little">
+                                                                                内存：@item.neicun
+                                                                                <br />
+                                                                                分辨率：@item.fenbianlv
+                                                                            </p>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-price">
+                                                                <div class="item-price">
+                                                                    @item.price
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-number">
+                                                                <div class="item-number">
+                                                                    <span>×</span>@item.sp_num
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-operation">
+                                                                <div class="item-operation">
+                                                                    <a href="refund.html">退款/退货</a>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                    <div class="order-right">
+                                                        <li class="td td-amount">
+                                                            <div class="item-amount">
+                                                                合计：@{
+                                            double? sum = @item.price * @item.sp_num;
+                                                                }
+                                                                @sum
+                                                                <p>含运费：<span>0</span></p>
+                                                            </div>
+                                                        </li>
+                                                        <div class="move-right">
+                                                            <li class="td td-status">
+                                                                <div class="item-status">
+                                                                    <p class="Mystatus">卖家已发货</p>
+                                                                    <p class="order-info"><a href="orderinfo.html">订单详情</a></p>
+                                                                    <p class="order-info"><a href="logistics.html">查看物流</a></p>
+                                                                    <p class="order-info"><a href="#">延长收货</a></p>
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-change">
+                                                                <span class="dingdan_id" style="display: none">@item.OrderInfo_Id</span>
+                                                                <div class="am-btn am-btn-danger anniu">
+                                                                    确认收货
+                                                                </div>
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        }
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            @* ok *@
+                            <div class="am-tab-panel am-fade" id="tab3">
+                                <div class="order-top">
+                                    <div class="th th-item">
+                                        <td class="td-inner">商品</td>
+                                    </div>
+                                    <div class="th th-price">
+                                        <td class="td-inner">单价</td>
+                                    </div>
+                                    <div class="th th-number">
+                                        <td class="td-inner">数量</td>
+                                    </div>
+                                    <div class="th th-operation">
+                                        <td class="td-inner">商品操作</td>
+                                    </div>
+                                    <div class="th th-amount">
+                                        <td class="td-inner">合计</td>
+                                    </div>
+                                    <div class="th th-status">
+                                        <td class="td-inner">交易状态</td>
+                                    </div>
+                                    <div class="th th-change">
+                                        <td class="td-inner">交易操作</td>
+                                    </div>
+                                </div>
+
+                                <div class="order-main">
+                                    @foreach (DTOgoods_orderinfo item in dto_daifahuo_list)
+                                    {
+
+                                        <div class="order-list">
+                                            <div class="order-status2">
+                                                <div class="order-title">
+                                                    <div class="dd-num">订单编号：<a href="javascript:;">@item.OrderInfo_Id</a></div>
+                                                    <span>成交时间：@item.OrderInfo_time</span>
+                                                    <!--    <em>店铺：小桔灯</em>-->
+                                                </div>
+                                                <div class="order-content">
+                                                    <div class="order-left">
+
+                                                        <ul class="item-list">
+                                                            <li class="td td-item">
+                                                                <div class="item-pic">
+                                                                    <a href="~/XiangXi/XiangXi?sp_id=@item.sp_id" class="J_MakePoint">
+                                                                        <img src="@item.sp_imgs" class="itempic J_ItemImg">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="item-info">
+                                                                    <div class="item-basic-info">
+                                                                        <a href="~/XiangXi/XiangXi?sp_id=@item.sp_id">
+                                                                            <p>@item.sp_name</p>
+                                                                            <p class="info-little">
+                                                                                内存：@item.neicun
+                                                                                <br />
+                                                                                分辨率：@item.fenbianlv
+                                                                            </p>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-price">
+                                                                <div class="item-price">
+                                                                    @item.price
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-number">
+                                                                <div class="item-number">
+                                                                    <span>×</span>@item.sp_num
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-operation">
+                                                                <div class="item-operation">
+                                                                    <a href="refund.html">退款</a>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+
+
+                                                    </div>
+                                                    <div class="order-right">
+                                                        <li class="td td-amount">
+                                                            <div class="item-amount">
+                                                                合计：@{
+                                        double? sum = @item.price * @item.sp_num;
+                                                                }
+                                                                @sum
+                                                                <p>含运费：<span>0</span></p>
+                                                            </div>
+                                                        </li>
+                                                        <div class="move-right">
+                                                            <li class="td td-status">
+                                                                <div class="item-status">
+                                                                    <p class="Mystatus">买家已付款</p>
+                                                                    <p class="order-info"><a href="orderinfo.html">订单详情</a></p>
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-change">
+                                                                <span class="dingdan_id" style="display: none">@item.OrderInfo_Id</span>
+                                                                <div class="am-btn am-btn-danger anniu">
+                                                                    提醒发货
+                                                                </div>
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                                   
+                                    }
+                                </div>
+                            </div>
+
+
+
+                            <div class="am-tab-panel am-fade" id="tab4">
+                                <div class="order-top">
+                                    <div class="th th-item">
+                                        <td class="td-inner">商品</td>
+                                    </div>
+                                    <div class="th th-price">
+                                        <td class="td-inner">单价</td>
+                                    </div>
+                                    <div class="th th-number">
+                                        <td class="td-inner">数量</td>
+                                    </div>
+                                    <div class="th th-operation">
+                                        <td class="td-inner">商品操作</td>
+                                    </div>
+                                    <div class="th th-amount">
+                                        <td class="td-inner">合计</td>
+                                    </div>
+                                    <div class="th th-status">
+                                        <td class="td-inner">交易状态</td>
+                                    </div>
+                                    <div class="th th-change">
+                                        <td class="td-inner">交易操作</td>
+                                    </div>
+                                </div>
+
+                                <div class="order-main">
+                                    @foreach (DTOgoods_orderinfo item in dto_yifahuo_list)
+                                    {
+                                        
+                                        <div class="order-list">
+                                            <div class="order-status3">
+                                                <div class="order-title">
+                                                    <div class="dd-num">订单编号：<a href="javascript:;">@item.OrderInfo_Id</a></div>
+                                                    <span>成交时间：@item.OrderInfo_time</span>
+                                                    <!--    <em>店铺：小桔灯</em>-->
+                                                </div>
+                                                <div class="order-content">
+                                                    <div class="order-left">
+                                                        <ul class="item-list">
+                                                            <li class="td td-item">
+                                                                <div class="item-pic">
+                                                                    <a href="~/XiangXi/XiangXi?sp_id=@item.sp_id" class="J_MakePoint">
+                                                                        <img src="@item.sp_imgs" class="itempic J_ItemImg">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="item-info">
+                                                                    <div class="item-basic-info">
+                                                                        <a href="~/XiangXi/XiangXi?sp_id=@item.sp_id">
+                                                                            <p>@item.sp_name</p>
+                                                                            <p class="info-little">
+                                                                                内存：@item.neicun
+                                                                                <br />
+                                                                                分辨率：@item.fenbianlv
+                                                                            </p>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-price">
+                                                                <div class="item-price">
+                                                                    @item.price
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-number">
+                                                                <div class="item-number">
+                                                                    <span>×</span>@item.sp_num
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-operation">
+                                                                <div class="item-operation">
+                                                                    <a href="refund.html">退款/退货</a>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+
+
+
+                                                    </div>
+                                                    <div class="order-right">
+                                                        <li class="td td-amount">
+                                                            <div class="item-amount">
+                                                                合计：@{
+                                        double? sum = @item.price * @item.sp_num;
+                                                                }
+                                                                @sum
+                                                                <p>含运费：<span>0</span></p>
+                                                            </div>
+                                                        </li>
+                                                        <div class="move-right">
+                                                            <li class="td td-status">
+                                                                <div class="item-status">
+                                                                    <p class="Mystatus">卖家已发货</p>
+                                                                    <p class="order-info"><a href="orderinfo.html">订单详情</a></p>
+                                                                    <p class="order-info"><a href="logistics.html">查看物流</a></p>
+                                                                    <p class="order-info"><a href="#">延长收货</a></p>
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-change">
+                                                                <span class="dingdan_id" style="display: none">@item.OrderInfo_Id</span>
+                                                                <div class="am-btn am-btn-danger anniu">
+                                                                    确认收货
+                                                                </div>
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+                            </div>
+
+                            <div class="am-tab-panel am-fade" id="tab5">
+                                <div class="order-top">
+                                    <div class="th th-item">
+                                        <td class="td-inner">商品</td>
+                                    </div>
+                                    <div class="th th-price">
+                                        <td class="td-inner">单价</td>
+                                    </div>
+                                    <div class="th th-number">
+                                        <td class="td-inner">数量</td>
+                                    </div>
+                                    <div class="th th-operation">
+                                        <td class="td-inner">商品操作</td>
+                                    </div>
+                                    <div class="th th-amount">
+                                        <td class="td-inner">合计</td>
+                                    </div>
+                                    <div class="th th-status">
+                                        <td class="td-inner">交易状态</td>
+                                    </div>
+                                    <div class="th th-change">
+                                        <td class="td-inner">交易操作</td>
+                                    </div>
+                                </div>
+
+                                <div class="order-main">
+
+                                    @foreach (DTOgoods_orderinfo item in dto_yiqianhuo_list)
+                                    {
+                                        <div class="order-list">
+                                            <!--不同状态的订单	-->
+                                            <div class="order-status4">
+                                                <div class="order-title">
+                                                    <div class="dd-num">订单编号：<a href="javascript:;">@item.OrderInfo_Id</a></div>
+                                                    <span>成交时间：@item.OrderInfo_time</span>
+
+                                                </div>
+                                                <div class="order-content">
+                                                    <div class="order-left">
+                                                        <ul class="item-list">
+                                                            <li class="td td-item">
+                                                                <div class="item-pic">
+                                                                    <a href="~/XiangXi/XiangXi?sp_id=@item.sp_id" class="J_MakePoint">
+                                                                        <img src="@item.sp_imgs" class="itempic J_ItemImg">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="item-info">
+                                                                    <div class="item-basic-info">
+                                                                        <a href=~"/XiangXi/XiangXi?sp_id=@item.sp_id">
+                                                                            <p>@item.sp_name</p>
+                                                                            <p class="info-little">
+                                                                                内存：@item.neicun
+                                                                                <br />
+                                                                                分辨率：@item.fenbianlv
+                                                                            </p>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-price">
+                                                                <div class="item-price">
+                                                                    @item.price
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-number">
+                                                                <div class="item-number">
+                                                                    <span>×</span>@item.sp_num
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-operation">
+                                                                <div class="item-operation">
+                                                                    <a href="refund.html">退款/退货</a>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                    <div class="order-right">
+                                                        <li class="td td-amount">
+                                                            <div class="item-amount">
+                                                                合计：@{
+                                        double? sum = @item.price * @item.sp_num;
+                                                                }
+                                                                @sum
+                                                                <p>含运费：<span>0</span></p>
+                                                            </div>
+                                                        </li>
+                                                        <div class="move-right">
+                                                            <li class="td td-status">
+                                                                <div class="item-status">
+                                                                    <p class="Mystatus">交易成功</p>
+                                                                    <p class="order-info"><a href="orderinfo.html">订单详情</a></p>
+                                                                    <p class="order-info"><a href="logistics.html">查看物流</a></p>
+                                                                </div>
+                                                            </li>
+                                                            <li class="td td-change">
+                                                                <a href="commentlist.html">
+                                                                    <span class="dingdan_id" style="display: none">@item.OrderInfo_Id</span>
+                                                                    <div class="am-btn am-btn-danger anniu">
+                                                                        评价商品
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+

@@ -1,0 +1,756 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="B2CSystemModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="B2CSystemModelStoreContainer">
+          <EntitySet Name="AdminInfo" EntityType="B2CSystemModel.Store.AdminInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Center_Money" EntityType="B2CSystemModel.Store.Center_Money" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CollectInfo" EntityType="B2CSystemModel.Store.CollectInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DataList" EntityType="B2CSystemModel.Store.DataList" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="GoodsDetailsIMG" EntityType="B2CSystemModel.Store.GoodsDetailsIMG" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="GoodsImgs" EntityType="B2CSystemModel.Store.GoodsImgs" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="GoodsInfo" EntityType="B2CSystemModel.Store.GoodsInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="GoodType" EntityType="B2CSystemModel.Store.GoodType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="KeFu" EntityType="B2CSystemModel.Store.KeFu" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OrderInfo" EntityType="B2CSystemModel.Store.OrderInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="pingjia" EntityType="B2CSystemModel.Store.pingjia" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Shangjia_X_GoodsInfo" EntityType="B2CSystemModel.Store.Shangjia_X_GoodsInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ShopCartInfo" EntityType="B2CSystemModel.Store.ShopCartInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ShouAddress" EntityType="B2CSystemModel.Store.ShouAddress" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StoreInfo" EntityType="B2CSystemModel.Store.StoreInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserDetails" EntityType="B2CSystemModel.Store.UserDetails" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserInfo" EntityType="B2CSystemModel.Store.UserInfo" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="AdminInfo">
+          <Key>
+            <PropertyRef Name="AdminInfo_Id" />
+          </Key>
+          <Property Name="AdminInfo_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AIAccount" Type="varchar" MaxLength="20" />
+          <Property Name="AIPwd" Type="varchar" MaxLength="20" />
+          <Property Name="AIName" Type="varchar" MaxLength="10" />
+          <Property Name="AIImg" Type="varchar" MaxLength="64" />
+          <Property Name="IsSa" Type="int" />
+        </EntityType>
+        <EntityType Name="Center_Money">
+          <Key>
+            <PropertyRef Name="CM_id" />
+          </Key>
+          <Property Name="CM_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CMMoney" Type="float" />
+          <Property Name="CMTime" Type="datetime" />
+          <Property Name="UserInfo_Id" Type="int" />
+          <Property Name="SJ_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="CollectInfo">
+          <Key>
+            <PropertyRef Name="CollectInfo_Id" />
+          </Key>
+          <Property Name="CollectInfo_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GoodsInfo_Id" Type="int" />
+          <Property Name="UserInfo_Id" Type="int" />
+          <Property Name="CI_time" Type="date" />
+          <Property Name="CI_Remark" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="DataList">
+          <Key>
+            <PropertyRef Name="GoodsInfo_Id" />
+          </Key>
+          <Property Name="GoodsInfo_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GIName" Type="varchar" MaxLength="64" />
+          <Property Name="GoodsType_id" Type="int" />
+          <Property Name="GoodsImgs_id" Type="int" />
+          <Property Name="GIPrice" Type="float" />
+          <Property Name="GIItem" Type="varchar" MaxLength="64" />
+          <Property Name="GIShangShi" Type="datetime" />
+          <Property Name="GICPU" Type="varchar" MaxLength="64" />
+          <Property Name="GIPingMu" Type="varchar" MaxLength="64" />
+          <Property Name="GIFenBianLv" Type="varchar" MaxLength="64" />
+          <Property Name="GIHouDu" Type="varchar" MaxLength="64" />
+          <Property Name="GIDianChi" Type="varchar" MaxLength="64" />
+          <Property Name="GINeiCun" Type="varchar" MaxLength="64" />
+          <Property Name="GIKuCun" Type="int" />
+          <Property Name="CIXiaoLiang" Type="int" />
+          <Property Name="IsNew" Type="int" />
+          <Property Name="IsHot" Type="int" />
+          <Property Name="IsDown" Type="int" />
+          <Property Name="GIRemark" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="GoodsDetailsIMG">
+          <Key>
+            <PropertyRef Name="GoodsDetailsIMG" />
+          </Key>
+          <Property Name="GoodsDetailsIMG" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GoodsInfo_id" Type="int" />
+          <Property Name="GoodsDetailsIMG_thumbone" Type="varchar" MaxLength="256" />
+          <Property Name="GoodsDetailsIMG_thumbtwo" Type="varchar" MaxLength="256" />
+          <Property Name="GoodsDetailsIMG_thumbthree" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="GoodsImgs">
+          <Key>
+            <PropertyRef Name="GImgs_id" />
+          </Key>
+          <Property Name="GImgs_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GImgs_thumbone" Type="varchar" MaxLength="256" />
+          <Property Name="GImgs_thumbtwo" Type="varchar" MaxLength="256" />
+          <Property Name="GImgs_thumbthree" Type="varchar" MaxLength="256" />
+          <Property Name="GImgs_thumbfour" Type="varchar" MaxLength="256" />
+          <Property Name="GImgs_text" Type="text" />
+        </EntityType>
+        <EntityType Name="GoodsInfo">
+          <Key>
+            <PropertyRef Name="GoodsInfo_Id" />
+          </Key>
+          <Property Name="GoodsInfo_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GIName" Type="varchar" MaxLength="64" />
+          <Property Name="GoodsType_id" Type="int" />
+          <Property Name="GoodsImgs_id" Type="int" />
+          <Property Name="GIPrice" Type="float" />
+          <Property Name="GIItem" Type="varchar" MaxLength="64" />
+          <Property Name="GIShangShi" Type="datetime" />
+          <Property Name="GICPU" Type="varchar" MaxLength="64" />
+          <Property Name="GIPingMu" Type="varchar" MaxLength="64" />
+          <Property Name="GIFenBianLv" Type="varchar" MaxLength="64" />
+          <Property Name="GIHouDu" Type="varchar" MaxLength="64" />
+          <Property Name="GIDianChi" Type="varchar" MaxLength="64" />
+          <Property Name="GINeiCun" Type="varchar" MaxLength="64" />
+          <Property Name="GIKuCun" Type="int" />
+          <Property Name="CIXiaoLiang" Type="int" />
+          <Property Name="IsNew" Type="int" />
+          <Property Name="IsHot" Type="int" />
+          <Property Name="IsDown" Type="int" />
+          <Property Name="GIRemark" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="GoodType">
+          <Key>
+            <PropertyRef Name="GoodType_Id" />
+          </Key>
+          <Property Name="GoodType_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GTName" Type="varchar" MaxLength="64" />
+          <Property Name="GTRemark" Type="varchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="KeFu">
+          <Key>
+            <PropertyRef Name="KF_id" />
+          </Key>
+          <Property Name="KF_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserInfo_Id" Type="int" />
+          <Property Name="SJ_Id" Type="int" />
+          <Property Name="KF_GoodsInfo_Id" Type="int" />
+          <Property Name="UserInfo_time" Type="datetime" />
+          <Property Name="UserInfo_rcontent" Type="text" />
+          <Property Name="KF_rcontent" Type="text" />
+          <Property Name="KF_rtime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OrderInfo">
+          <Key>
+            <PropertyRef Name="OrderInfo_Id" />
+          </Key>
+          <Property Name="OrderInfo_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserInfo_Id" Type="int" />
+          <Property Name="GoodsInfo_Id" Type="int" />
+          <Property Name="OrderState" Type="int" />
+          <Property Name="ShouAddress" Type="varchar" MaxLength="256" />
+          <Property Name="UserRemark" Type="varchar" MaxLength="200" />
+          <Property Name="StoryRemark" Type="varchar" MaxLength="200" />
+          <Property Name="SongHuoTime" Type="int" />
+          <Property Name="is_tuikuan" Type="int" />
+          <Property Name="sp_numt" Type="int" />
+          <Property Name="OrderInfo_time" Type="datetime" />
+        </EntityType>
+        <EntityType Name="pingjia">
+          <Key>
+            <PropertyRef Name="PJ_Id" />
+          </Key>
+          <Property Name="PJ_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserInfo_Id" Type="int" />
+          <Property Name="PJ_GoodsInfo_Id" Type="int" />
+          <Property Name="PJ_etime" Type="date" />
+          <Property Name="PJ_content" Type="text" />
+          <Property Name="PJ_rcontent" Type="text" />
+          <Property Name="PJ_rtime" Type="date" />
+          <Property Name="SJ_Id" Type="int" />
+          <Property Name="PJ_rank" Type="int" />
+        </EntityType>
+        <EntityType Name="Shangjia_X_GoodsInfo">
+          <Key>
+            <PropertyRef Name="SXG" />
+          </Key>
+          <Property Name="SXG" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Store_Id" Type="int" />
+          <Property Name="GoodsInfo_Id" Type="int" />
+          <Property Name="GIZheKou" Type="float" />
+        </EntityType>
+        <EntityType Name="ShopCartInfo">
+          <Key>
+            <PropertyRef Name="SC_Id" />
+          </Key>
+          <Property Name="SC_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GoodsInfo_Id" Type="int" />
+          <Property Name="UserInfo_Id" Type="int" />
+          <Property Name="SC_addtime" Type="date" />
+          <Property Name="SC_price" Type="float" />
+          <Property Name="SC_number" Type="int" />
+          <Property Name="Remark" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="ShouAddress">
+          <Key>
+            <PropertyRef Name="ShouAddress_Id" />
+          </Key>
+          <Property Name="ShouAddress_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserInfo_Id" Type="int" />
+          <Property Name="SAName" Type="varchar" MaxLength="10" />
+          <Property Name="SAPhone" Type="varchar" MaxLength="11" />
+          <Property Name="SAAddress" Type="varchar" MaxLength="256" />
+          <Property Name="IsDefault" Type="int" />
+        </EntityType>
+        <EntityType Name="StoreInfo">
+          <Key>
+            <PropertyRef Name="StoreInfo_Id" />
+          </Key>
+          <Property Name="StoreInfo_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AdminInfo_Id" Type="int" />
+          <Property Name="SImg" Type="varchar" MaxLength="64" />
+          <Property Name="SName" Type="varchar" MaxLength="32" />
+          <Property Name="SBankcard" Type="varchar" MaxLength="64" />
+          <Property Name="SAddTime" Type="datetime" />
+          <Property Name="SIDCard" Type="varchar" MaxLength="18" />
+          <Property Name="SRemark" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="UserDetails_Id" />
+          </Key>
+          <Property Name="UserDetails_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserInfo_Id" Type="int" />
+          <Property Name="UDImg" Type="varchar" MaxLength="64" />
+          <Property Name="UDName" Type="varchar" MaxLength="10" />
+          <Property Name="UDSex" Type="char" MaxLength="2" />
+          <Property Name="UDIDCard" Type="varchar" MaxLength="18" />
+          <Property Name="UDBankcard" Type="varchar" MaxLength="64" />
+          <Property Name="UDZF_password" Type="varchar" MaxLength="6" />
+          <Property Name="UDAddTime" Type="datetime" />
+          <Property Name="UDRemark" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserInfo_Id" />
+          </Key>
+          <Property Name="UserInfo_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="varchar" MaxLength="64" />
+          <Property Name="UserPhone" Type="varchar" MaxLength="11" />
+          <Property Name="UserPwd" Type="varchar" MaxLength="64" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="B2CSystemModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="B2CSystemEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminInfo" EntityType="B2CSystemModel.AdminInfo" />
+          <EntitySet Name="Center_Money" EntityType="B2CSystemModel.Center_Money" />
+          <EntitySet Name="CollectInfo" EntityType="B2CSystemModel.CollectInfo" />
+          <EntitySet Name="DataList" EntityType="B2CSystemModel.DataList" />
+          <EntitySet Name="GoodsDetailsIMG" EntityType="B2CSystemModel.GoodsDetailsIMG" />
+          <EntitySet Name="GoodsImgs" EntityType="B2CSystemModel.GoodsImgs" />
+          <EntitySet Name="GoodsInfo" EntityType="B2CSystemModel.GoodsInfo" />
+          <EntitySet Name="GoodType" EntityType="B2CSystemModel.GoodType" />
+          <EntitySet Name="KeFu" EntityType="B2CSystemModel.KeFu" />
+          <EntitySet Name="OrderInfo" EntityType="B2CSystemModel.OrderInfo" />
+          <EntitySet Name="pingjia" EntityType="B2CSystemModel.pingjia" />
+          <EntitySet Name="Shangjia_X_GoodsInfo" EntityType="B2CSystemModel.Shangjia_X_GoodsInfo" />
+          <EntitySet Name="ShopCartInfo" EntityType="B2CSystemModel.ShopCartInfo" />
+          <EntitySet Name="ShouAddress" EntityType="B2CSystemModel.ShouAddress" />
+          <EntitySet Name="StoreInfo" EntityType="B2CSystemModel.StoreInfo" />
+          <EntitySet Name="UserDetails" EntityType="B2CSystemModel.UserDetails" />
+          <EntitySet Name="UserInfo" EntityType="B2CSystemModel.UserInfo" />
+        </EntityContainer>
+        <EntityType Name="AdminInfo">
+          <Key>
+            <PropertyRef Name="AdminInfo_Id" />
+          </Key>
+          <Property Name="AdminInfo_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="AIAccount" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="AIPwd" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="AIName" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="AIImg" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="IsSa" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Center_Money">
+          <Key>
+            <PropertyRef Name="CM_id" />
+          </Key>
+          <Property Name="CM_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="CMMoney" Type="Double" />
+          <Property Name="CMTime" Type="DateTime" Precision="3" />
+          <Property Name="UserInfo_Id" Type="Int32" />
+          <Property Name="SJ_Id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CollectInfo">
+          <Key>
+            <PropertyRef Name="CollectInfo_Id" />
+          </Key>
+          <Property Name="CollectInfo_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="GoodsInfo_Id" Type="Int32" />
+          <Property Name="UserInfo_Id" Type="Int32" />
+          <Property Name="CI_time" Type="DateTime" Precision="0" />
+          <Property Name="CI_Remark" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="DataList">
+          <Key>
+            <PropertyRef Name="GoodsInfo_Id" />
+          </Key>
+          <Property Name="GoodsInfo_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="GIName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GoodsType_id" Type="Int32" />
+          <Property Name="GoodsImgs_id" Type="Int32" />
+          <Property Name="GIPrice" Type="Double" />
+          <Property Name="GIItem" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GIShangShi" Type="DateTime" Precision="3" />
+          <Property Name="GICPU" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GIPingMu" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GIFenBianLv" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GIHouDu" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GIDianChi" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GINeiCun" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GIKuCun" Type="Int32" />
+          <Property Name="CIXiaoLiang" Type="Int32" />
+          <Property Name="IsNew" Type="Int32" />
+          <Property Name="IsHot" Type="Int32" />
+          <Property Name="IsDown" Type="Int32" />
+          <Property Name="GIRemark" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="GoodsDetailsIMG">
+          <Key>
+            <PropertyRef Name="GoodsDetailsIMG1" />
+          </Key>
+          <Property Name="GoodsDetailsIMG1" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="GoodsInfo_id" Type="Int32" />
+          <Property Name="GoodsDetailsIMG_thumbone" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="GoodsDetailsIMG_thumbtwo" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="GoodsDetailsIMG_thumbthree" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="GoodsImgs">
+          <Key>
+            <PropertyRef Name="GImgs_id" />
+          </Key>
+          <Property Name="GImgs_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="GImgs_thumbone" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="GImgs_thumbtwo" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="GImgs_thumbthree" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="GImgs_thumbfour" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="GImgs_text" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="GoodsInfo">
+          <Key>
+            <PropertyRef Name="GoodsInfo_Id" />
+          </Key>
+          <Property Name="GoodsInfo_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="GIName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GoodsType_id" Type="Int32" />
+          <Property Name="GoodsImgs_id" Type="Int32" />
+          <Property Name="GIPrice" Type="Double" />
+          <Property Name="GIItem" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GIShangShi" Type="DateTime" Precision="3" />
+          <Property Name="GICPU" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GIPingMu" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GIFenBianLv" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GIHouDu" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GIDianChi" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GINeiCun" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GIKuCun" Type="Int32" />
+          <Property Name="CIXiaoLiang" Type="Int32" />
+          <Property Name="IsNew" Type="Int32" />
+          <Property Name="IsHot" Type="Int32" />
+          <Property Name="IsDown" Type="Int32" />
+          <Property Name="GIRemark" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="GoodType">
+          <Key>
+            <PropertyRef Name="GoodType_Id" />
+          </Key>
+          <Property Name="GoodType_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="GTName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="GTRemark" Type="String" MaxLength="128" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="KeFu">
+          <Key>
+            <PropertyRef Name="KF_id" />
+          </Key>
+          <Property Name="KF_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserInfo_Id" Type="Int32" />
+          <Property Name="SJ_Id" Type="Int32" />
+          <Property Name="KF_GoodsInfo_Id" Type="Int32" />
+          <Property Name="UserInfo_time" Type="DateTime" Precision="3" />
+          <Property Name="UserInfo_rcontent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="KF_rcontent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="KF_rtime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="OrderInfo">
+          <Key>
+            <PropertyRef Name="OrderInfo_Id" />
+          </Key>
+          <Property Name="OrderInfo_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserInfo_Id" Type="Int32" />
+          <Property Name="GoodsInfo_Id" Type="Int32" />
+          <Property Name="OrderState" Type="Int32" />
+          <Property Name="ShouAddress" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="UserRemark" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="StoryRemark" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="SongHuoTime" Type="Int32" />
+          <Property Name="is_tuikuan" Type="Int32" />
+          <Property Name="sp_numt" Type="Int32" />
+          <Property Name="OrderInfo_time" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="pingjia">
+          <Key>
+            <PropertyRef Name="PJ_Id" />
+          </Key>
+          <Property Name="PJ_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserInfo_Id" Type="Int32" />
+          <Property Name="PJ_GoodsInfo_Id" Type="Int32" />
+          <Property Name="PJ_etime" Type="DateTime" Precision="0" />
+          <Property Name="PJ_content" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="PJ_rcontent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="PJ_rtime" Type="DateTime" Precision="0" />
+          <Property Name="SJ_Id" Type="Int32" />
+          <Property Name="PJ_rank" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Shangjia_X_GoodsInfo">
+          <Key>
+            <PropertyRef Name="SXG" />
+          </Key>
+          <Property Name="SXG" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Store_Id" Type="Int32" />
+          <Property Name="GoodsInfo_Id" Type="Int32" />
+          <Property Name="GIZheKou" Type="Double" />
+        </EntityType>
+        <EntityType Name="ShopCartInfo">
+          <Key>
+            <PropertyRef Name="SC_Id" />
+          </Key>
+          <Property Name="SC_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="GoodsInfo_Id" Type="Int32" />
+          <Property Name="UserInfo_Id" Type="Int32" />
+          <Property Name="SC_addtime" Type="DateTime" Precision="0" />
+          <Property Name="SC_price" Type="Double" />
+          <Property Name="SC_number" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ShouAddress">
+          <Key>
+            <PropertyRef Name="ShouAddress_Id" />
+          </Key>
+          <Property Name="ShouAddress_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserInfo_Id" Type="Int32" />
+          <Property Name="SAName" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="SAPhone" Type="String" MaxLength="11" Unicode="false" FixedLength="false" />
+          <Property Name="SAAddress" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="IsDefault" Type="Int32" />
+        </EntityType>
+        <EntityType Name="StoreInfo">
+          <Key>
+            <PropertyRef Name="StoreInfo_Id" />
+          </Key>
+          <Property Name="StoreInfo_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="AdminInfo_Id" Type="Int32" />
+          <Property Name="SImg" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="SName" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="SBankcard" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="SAddTime" Type="DateTime" Precision="3" />
+          <Property Name="SIDCard" Type="String" MaxLength="18" Unicode="false" FixedLength="false" />
+          <Property Name="SRemark" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="UserDetails_Id" />
+          </Key>
+          <Property Name="UserDetails_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserInfo_Id" Type="Int32" />
+          <Property Name="UDImg" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="UDName" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="UDSex" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
+          <Property Name="UDIDCard" Type="String" MaxLength="18" Unicode="false" FixedLength="false" />
+          <Property Name="UDBankcard" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="UDZF_password" Type="String" MaxLength="6" Unicode="false" FixedLength="false" />
+          <Property Name="UDAddTime" Type="DateTime" Precision="3" />
+          <Property Name="UDRemark" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserInfo_Id" />
+          </Key>
+          <Property Name="UserInfo_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="UserPhone" Type="String" MaxLength="11" Unicode="false" FixedLength="false" />
+          <Property Name="UserPwd" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="B2CSystemModelStoreContainer" CdmEntityContainer="B2CSystemEntities">
+          <EntitySetMapping Name="AdminInfo">
+            <EntityTypeMapping TypeName="B2CSystemModel.AdminInfo">
+              <MappingFragment StoreEntitySet="AdminInfo">
+                <ScalarProperty Name="AdminInfo_Id" ColumnName="AdminInfo_Id" />
+                <ScalarProperty Name="AIAccount" ColumnName="AIAccount" />
+                <ScalarProperty Name="AIPwd" ColumnName="AIPwd" />
+                <ScalarProperty Name="AIName" ColumnName="AIName" />
+                <ScalarProperty Name="AIImg" ColumnName="AIImg" />
+                <ScalarProperty Name="IsSa" ColumnName="IsSa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Center_Money">
+            <EntityTypeMapping TypeName="B2CSystemModel.Center_Money">
+              <MappingFragment StoreEntitySet="Center_Money">
+                <ScalarProperty Name="CM_id" ColumnName="CM_id" />
+                <ScalarProperty Name="CMMoney" ColumnName="CMMoney" />
+                <ScalarProperty Name="CMTime" ColumnName="CMTime" />
+                <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+                <ScalarProperty Name="SJ_Id" ColumnName="SJ_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CollectInfo">
+            <EntityTypeMapping TypeName="B2CSystemModel.CollectInfo">
+              <MappingFragment StoreEntitySet="CollectInfo">
+                <ScalarProperty Name="CollectInfo_Id" ColumnName="CollectInfo_Id" />
+                <ScalarProperty Name="GoodsInfo_Id" ColumnName="GoodsInfo_Id" />
+                <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+                <ScalarProperty Name="CI_time" ColumnName="CI_time" />
+                <ScalarProperty Name="CI_Remark" ColumnName="CI_Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DataList">
+            <EntityTypeMapping TypeName="B2CSystemModel.DataList">
+              <MappingFragment StoreEntitySet="DataList">
+                <ScalarProperty Name="GoodsInfo_Id" ColumnName="GoodsInfo_Id" />
+                <ScalarProperty Name="GIName" ColumnName="GIName" />
+                <ScalarProperty Name="GoodsType_id" ColumnName="GoodsType_id" />
+                <ScalarProperty Name="GoodsImgs_id" ColumnName="GoodsImgs_id" />
+                <ScalarProperty Name="GIPrice" ColumnName="GIPrice" />
+                <ScalarProperty Name="GIItem" ColumnName="GIItem" />
+                <ScalarProperty Name="GIShangShi" ColumnName="GIShangShi" />
+                <ScalarProperty Name="GICPU" ColumnName="GICPU" />
+                <ScalarProperty Name="GIPingMu" ColumnName="GIPingMu" />
+                <ScalarProperty Name="GIFenBianLv" ColumnName="GIFenBianLv" />
+                <ScalarProperty Name="GIHouDu" ColumnName="GIHouDu" />
+                <ScalarProperty Name="GIDianChi" ColumnName="GIDianChi" />
+                <ScalarProperty Name="GINeiCun" ColumnName="GINeiCun" />
+                <ScalarProperty Name="GIKuCun" ColumnName="GIKuCun" />
+                <ScalarProperty Name="CIXiaoLiang" ColumnName="CIXiaoLiang" />
+                <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+                <ScalarProperty Name="IsHot" ColumnName="IsHot" />
+                <ScalarProperty Name="IsDown" ColumnName="IsDown" />
+                <ScalarProperty Name="GIRemark" ColumnName="GIRemark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoodsDetailsIMG">
+            <EntityTypeMapping TypeName="B2CSystemModel.GoodsDetailsIMG">
+              <MappingFragment StoreEntitySet="GoodsDetailsIMG">
+                <ScalarProperty Name="GoodsDetailsIMG1" ColumnName="GoodsDetailsIMG" />
+                <ScalarProperty Name="GoodsInfo_id" ColumnName="GoodsInfo_id" />
+                <ScalarProperty Name="GoodsDetailsIMG_thumbone" ColumnName="GoodsDetailsIMG_thumbone" />
+                <ScalarProperty Name="GoodsDetailsIMG_thumbtwo" ColumnName="GoodsDetailsIMG_thumbtwo" />
+                <ScalarProperty Name="GoodsDetailsIMG_thumbthree" ColumnName="GoodsDetailsIMG_thumbthree" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoodsImgs">
+            <EntityTypeMapping TypeName="B2CSystemModel.GoodsImgs">
+              <MappingFragment StoreEntitySet="GoodsImgs">
+                <ScalarProperty Name="GImgs_id" ColumnName="GImgs_id" />
+                <ScalarProperty Name="GImgs_thumbone" ColumnName="GImgs_thumbone" />
+                <ScalarProperty Name="GImgs_thumbtwo" ColumnName="GImgs_thumbtwo" />
+                <ScalarProperty Name="GImgs_thumbthree" ColumnName="GImgs_thumbthree" />
+                <ScalarProperty Name="GImgs_thumbfour" ColumnName="GImgs_thumbfour" />
+                <ScalarProperty Name="GImgs_text" ColumnName="GImgs_text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoodsInfo">
+            <EntityTypeMapping TypeName="B2CSystemModel.GoodsInfo">
+              <MappingFragment StoreEntitySet="GoodsInfo">
+                <ScalarProperty Name="GoodsInfo_Id" ColumnName="GoodsInfo_Id" />
+                <ScalarProperty Name="GIName" ColumnName="GIName" />
+                <ScalarProperty Name="GoodsType_id" ColumnName="GoodsType_id" />
+                <ScalarProperty Name="GoodsImgs_id" ColumnName="GoodsImgs_id" />
+                <ScalarProperty Name="GIPrice" ColumnName="GIPrice" />
+                <ScalarProperty Name="GIItem" ColumnName="GIItem" />
+                <ScalarProperty Name="GIShangShi" ColumnName="GIShangShi" />
+                <ScalarProperty Name="GICPU" ColumnName="GICPU" />
+                <ScalarProperty Name="GIPingMu" ColumnName="GIPingMu" />
+                <ScalarProperty Name="GIFenBianLv" ColumnName="GIFenBianLv" />
+                <ScalarProperty Name="GIHouDu" ColumnName="GIHouDu" />
+                <ScalarProperty Name="GIDianChi" ColumnName="GIDianChi" />
+                <ScalarProperty Name="GINeiCun" ColumnName="GINeiCun" />
+                <ScalarProperty Name="GIKuCun" ColumnName="GIKuCun" />
+                <ScalarProperty Name="CIXiaoLiang" ColumnName="CIXiaoLiang" />
+                <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+                <ScalarProperty Name="IsHot" ColumnName="IsHot" />
+                <ScalarProperty Name="IsDown" ColumnName="IsDown" />
+                <ScalarProperty Name="GIRemark" ColumnName="GIRemark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoodType">
+            <EntityTypeMapping TypeName="B2CSystemModel.GoodType">
+              <MappingFragment StoreEntitySet="GoodType">
+                <ScalarProperty Name="GoodType_Id" ColumnName="GoodType_Id" />
+                <ScalarProperty Name="GTName" ColumnName="GTName" />
+                <ScalarProperty Name="GTRemark" ColumnName="GTRemark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KeFu">
+            <EntityTypeMapping TypeName="B2CSystemModel.KeFu">
+              <MappingFragment StoreEntitySet="KeFu">
+                <ScalarProperty Name="KF_id" ColumnName="KF_id" />
+                <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+                <ScalarProperty Name="SJ_Id" ColumnName="SJ_Id" />
+                <ScalarProperty Name="KF_GoodsInfo_Id" ColumnName="KF_GoodsInfo_Id" />
+                <ScalarProperty Name="UserInfo_time" ColumnName="UserInfo_time" />
+                <ScalarProperty Name="UserInfo_rcontent" ColumnName="UserInfo_rcontent" />
+                <ScalarProperty Name="KF_rcontent" ColumnName="KF_rcontent" />
+                <ScalarProperty Name="KF_rtime" ColumnName="KF_rtime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderInfo">
+            <EntityTypeMapping TypeName="B2CSystemModel.OrderInfo">
+              <MappingFragment StoreEntitySet="OrderInfo">
+                <ScalarProperty Name="OrderInfo_Id" ColumnName="OrderInfo_Id" />
+                <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+                <ScalarProperty Name="GoodsInfo_Id" ColumnName="GoodsInfo_Id" />
+                <ScalarProperty Name="OrderState" ColumnName="OrderState" />
+                <ScalarProperty Name="ShouAddress" ColumnName="ShouAddress" />
+                <ScalarProperty Name="UserRemark" ColumnName="UserRemark" />
+                <ScalarProperty Name="StoryRemark" ColumnName="StoryRemark" />
+                <ScalarProperty Name="SongHuoTime" ColumnName="SongHuoTime" />
+                <ScalarProperty Name="is_tuikuan" ColumnName="is_tuikuan" />
+                <ScalarProperty Name="sp_numt" ColumnName="sp_numt" />
+                <ScalarProperty Name="OrderInfo_time" ColumnName="OrderInfo_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pingjia">
+            <EntityTypeMapping TypeName="B2CSystemModel.pingjia">
+              <MappingFragment StoreEntitySet="pingjia">
+                <ScalarProperty Name="PJ_Id" ColumnName="PJ_Id" />
+                <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+                <ScalarProperty Name="PJ_GoodsInfo_Id" ColumnName="PJ_GoodsInfo_Id" />
+                <ScalarProperty Name="PJ_etime" ColumnName="PJ_etime" />
+                <ScalarProperty Name="PJ_content" ColumnName="PJ_content" />
+                <ScalarProperty Name="PJ_rcontent" ColumnName="PJ_rcontent" />
+                <ScalarProperty Name="PJ_rtime" ColumnName="PJ_rtime" />
+                <ScalarProperty Name="SJ_Id" ColumnName="SJ_Id" />
+                <ScalarProperty Name="PJ_rank" ColumnName="PJ_rank" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shangjia_X_GoodsInfo">
+            <EntityTypeMapping TypeName="B2CSystemModel.Shangjia_X_GoodsInfo">
+              <MappingFragment StoreEntitySet="Shangjia_X_GoodsInfo">
+                <ScalarProperty Name="SXG" ColumnName="SXG" />
+                <ScalarProperty Name="Store_Id" ColumnName="Store_Id" />
+                <ScalarProperty Name="GoodsInfo_Id" ColumnName="GoodsInfo_Id" />
+                <ScalarProperty Name="GIZheKou" ColumnName="GIZheKou" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShopCartInfo">
+            <EntityTypeMapping TypeName="B2CSystemModel.ShopCartInfo">
+              <MappingFragment StoreEntitySet="ShopCartInfo">
+                <ScalarProperty Name="SC_Id" ColumnName="SC_Id" />
+                <ScalarProperty Name="GoodsInfo_Id" ColumnName="GoodsInfo_Id" />
+                <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+                <ScalarProperty Name="SC_addtime" ColumnName="SC_addtime" />
+                <ScalarProperty Name="SC_price" ColumnName="SC_price" />
+                <ScalarProperty Name="SC_number" ColumnName="SC_number" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShouAddress">
+            <EntityTypeMapping TypeName="B2CSystemModel.ShouAddress">
+              <MappingFragment StoreEntitySet="ShouAddress">
+                <ScalarProperty Name="ShouAddress_Id" ColumnName="ShouAddress_Id" />
+                <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+                <ScalarProperty Name="SAName" ColumnName="SAName" />
+                <ScalarProperty Name="SAPhone" ColumnName="SAPhone" />
+                <ScalarProperty Name="SAAddress" ColumnName="SAAddress" />
+                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoreInfo">
+            <EntityTypeMapping TypeName="B2CSystemModel.StoreInfo">
+              <MappingFragment StoreEntitySet="StoreInfo">
+                <ScalarProperty Name="StoreInfo_Id" ColumnName="StoreInfo_Id" />
+                <ScalarProperty Name="AdminInfo_Id" ColumnName="AdminInfo_Id" />
+                <ScalarProperty Name="SImg" ColumnName="SImg" />
+                <ScalarProperty Name="SName" ColumnName="SName" />
+                <ScalarProperty Name="SBankcard" ColumnName="SBankcard" />
+                <ScalarProperty Name="SAddTime" ColumnName="SAddTime" />
+                <ScalarProperty Name="SIDCard" ColumnName="SIDCard" />
+                <ScalarProperty Name="SRemark" ColumnName="SRemark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="B2CSystemModel.UserDetails">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="UserDetails_Id" ColumnName="UserDetails_Id" />
+                <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+                <ScalarProperty Name="UDImg" ColumnName="UDImg" />
+                <ScalarProperty Name="UDName" ColumnName="UDName" />
+                <ScalarProperty Name="UDSex" ColumnName="UDSex" />
+                <ScalarProperty Name="UDIDCard" ColumnName="UDIDCard" />
+                <ScalarProperty Name="UDBankcard" ColumnName="UDBankcard" />
+                <ScalarProperty Name="UDZF_password" ColumnName="UDZF_password" />
+                <ScalarProperty Name="UDAddTime" ColumnName="UDAddTime" />
+                <ScalarProperty Name="UDRemark" ColumnName="UDRemark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserInfo">
+            <EntityTypeMapping TypeName="B2CSystemModel.UserInfo">
+              <MappingFragment StoreEntitySet="UserInfo">
+                <ScalarProperty Name="UserInfo_Id" ColumnName="UserInfo_Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
+                <ScalarProperty Name="UserPwd" ColumnName="UserPwd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
